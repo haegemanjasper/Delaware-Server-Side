@@ -1,0 +1,16 @@
+{
+    "name": "2024-backend-a02",
+    "version": "1.0.0",
+    "description": "A02 2024 Backend",
+    "main": "src/index.js",
+    "repository": "https://github.com/HoGentProjectenII/2024-backend-a02.git",
+    "license": "ARR",
+    "private": true,
+    "maintainers": [
+        "DE BACKER Friso / Zurha (friso.debacker@student.hogent.be)",
+        "HAEGEMAN Jasper / JasperHmm (jasper.haegeman@student.hogent.be)",
+        "VAN DEN BROECK Robbe / Robbe-VandenBroeck (robbe.vandenbroeck@student.hogent.be)",
+        "WAUTERS Sander / SanderWauters (sander.wauters@student.hogent.be)",
+        "VAN DEN ABBEEL Brent / TheAlgorithm476 (brent.vandenabbeel@student.hogent.be)"
+    ]
+}

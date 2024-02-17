@@ -1,0 +1,8 @@
+# VS Code
+.vscode
+
+# IntelliJ / WebStorm
+.idea
+
+# NodeJS
+node_modules
