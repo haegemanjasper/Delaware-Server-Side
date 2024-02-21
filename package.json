@@ -4,7 +4,7 @@
     "description": "A02 2024 Backend",
     "main": "src/index.js",
     "repository": "https://github.com/HoGentProjectenII/2024-backend-a02.git",
-    "license": "ARR",
+    "license": "MIT",
     "private": true,
     "maintainers": [
         "DE BACKER Friso / Zurha (friso.debacker@student.hogent.be)",
@@ -12,5 +12,43 @@
         "VAN DEN BROECK Robbe / Robbe-VandenBroeck (robbe.vandenbroeck@student.hogent.be)",
         "WAUTERS Sander / SanderWauters (sander.wauters@student.hogent.be)",
         "VAN DEN ABBEEL Brent / TheAlgorithm476 (brent.vandenabbeel@student.hogent.be)"
-    ]
+    ],
+    "author": "Sander Wauters <sander.wauters@student.hogent.be>",
+    "scripts": {
+        "start": "env-cmd nodemon"
+    },
+    "dependencies": {
+        "@koa/cors": "^5.0.0",
+        "@koa/router": "^12.0.1",
+        "config": "^3.3.11",
+        "koa": "^2.15.0",
+        "koa-bodyparser": "^4.4.1",
+        "koa-helmet": "^7.0.2",
+        "winston": "^3.11.0"
+    },
+    "devDependencies": {
+        "env-cmd": "^10.1.0",
+        "nodemon": "^3.0.3"
+    },
+    "nodemonConfig": {
+        "signal": "SIGTERM",
+        "ignore": [
+            "node_modules/*",
+            ".vscode/*"
+        ],
+        "delay": "80",
+        "watch": [
+            "config",
+            "src",
+            "index.js"
+        ],
+        "ext": "js, json",
+        "legacyWatch": true,
+        "exec": "node --inspect=0.0.0.0:9001 --trace-warnings src/index.js"
+    },
+    "engines": {
+        "npm": ">=9.8.0",
+        "node": ">=20.6.0",
+        "yarn": ">=1.22.0"
+    }
 }
