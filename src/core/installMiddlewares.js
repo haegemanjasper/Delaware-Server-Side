@@ -95,7 +95,11 @@ async function handle404(ctx, next) {
         }
 }
 
-
+/**
+ * Installs all middlewares needed before we can install the rest layer.
+ *
+ * @params {object} app - The Koa application.
+ */
 module.exports = function installMiddlewares(app) {
     app.use(koaHelmet());
     app.use(koaCors(corsOptions));

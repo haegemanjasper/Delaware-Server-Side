@@ -6,6 +6,8 @@ let rootLogger;
 
 /**
  * Use this to access to rootLogger.
+ *
+ * @returns {object} - The main Winston instance.
  */
 function getLogger() {
     if (!rootLogger) {
@@ -16,6 +18,8 @@ function getLogger() {
 
 /**
  * Sets the logger formats.
+ *
+ * @returns {object} - The format that we want the logger to use.
  */
 function loggerFormat() {
     const formatMessage = ({ level, message, timestamp, name = "server", ...rest }) => 
@@ -33,6 +37,9 @@ function loggerFormat() {
 /**
  * Initializes rootLogger. Will log to console in development and production, 
  * in test environment it will log to "tests.log".
+ *
+ * @param {object}
+ * @returns {object} - The main Winston instance.
  */
 function initializeLogger({ level, disabled = false, defaultMeta = {} }) {
     rootLogger = winston.createLogger({

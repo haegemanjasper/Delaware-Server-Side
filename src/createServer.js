@@ -10,6 +10,9 @@ const LOG_DISABLED = config.get('log.disabled');
 
 /**
  * Creates the server and installs all middlwares.
+ *
+ * @returns {Object} - Contains a getter for the Koa instance, 
+ * a function to start the server and a function to stop the server.
  */
 module.exports = async function createServer() {
     initializeLogger({

@@ -22,3 +22,8 @@
 2024-02-21T12:35:07.876Z server [32minfo[39m GET /api/health/version {"NODE_ENV":"test"}
 2024-02-21T12:35:07.877Z server [32minfo[39m GET 200 /api/health/version {"NODE_ENV":"test"}
 2024-02-21T12:35:07.878Z server [32minfo[39m Server stopped {"NODE_ENV":"test"}
+2024-02-21T13:09:01.597Z server [32minfo[39m GET /api/health/ping {"NODE_ENV":"test"}
+2024-02-21T13:09:01.602Z server [32minfo[39m GET 200 /api/health/ping {"NODE_ENV":"test"}
+2024-02-21T13:09:01.621Z server [32minfo[39m GET /api/health/version {"NODE_ENV":"test"}
+2024-02-21T13:09:01.622Z server [32minfo[39m GET 200 /api/health/version {"NODE_ENV":"test"}
+2024-02-21T13:09:01.624Z server [32minfo[39m Server stopped {"NODE_ENV":"test"}

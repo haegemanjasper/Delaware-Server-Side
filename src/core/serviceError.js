@@ -11,14 +11,16 @@ const FORBIDDEN = "FORBIDDEN";
  *
  * Example: 
  *      throw ServiceError.notFound("message")
+ *
+ *  @class {ServiceError}
  */
 class ServiceError extends Error {
     /**
      * Should idealy be called only by the static methods.
      *
-     * Code: one of the above declared constants.
-     * Message: the message that will be sent to the client.
-     * Details: details about the request.
+     * @param {string} code - One of the above declared constants.
+     * @param {string} message - The message that will be sent to the client.
+     * @param {string} details - Details about the request.
     */
     constructor(code, message, details = {}) {
         super(message);
