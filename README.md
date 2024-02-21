@@ -26,3 +26,4 @@ NODE_ENV=test
 ```
 
 2.  Run the test with the `yarn test` or `yarn test:coverage` command.
+
