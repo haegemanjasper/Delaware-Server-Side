@@ -6,6 +6,7 @@
 
 ```
 NODE_ENV=development
+AUTH_JWT_SECRET=eenveeltemoeilijksecretdatniemandooitzalradenandersisdesitegehacked
 ```
 
 2.  Install all dependencies with the `yarn` command.
@@ -16,6 +17,8 @@ NODE_ENV=development
 -   **health**
     -   `GET /api/health/ping`
     -   `GET /api/health/version`
+-   **user**
+    -   `POST /users/login`
 
 ## Tests
 
@@ -23,6 +26,7 @@ NODE_ENV=development
 
 ```
 NODE_ENV=test
+AUTH_JWT_SECRET=eenveeltemoeilijksecretdatniemandooitzalradenandersisdesitegehacked
 ```
 
 2.  Run the test with the `yarn test` or `yarn test:coverage` command.
