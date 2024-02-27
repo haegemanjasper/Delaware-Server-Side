@@ -1,5 +1,6 @@
 const Router = require("@koa/router");
 const healthService = require("../service/health");
+const { requireAuthentication } = require("../core/auth");
 
 async function ping(ctx) {
     ctx.status = 200;
@@ -17,7 +18,7 @@ module.exports = (app) => {
     });
 
     router.get("/ping", ping);
-    router.get("/version", getVersion);
+    router.get("/version", requireAuthentication, getVersion);
 
     app.use(router.routes()).use(router.allowedMethods());
 };
