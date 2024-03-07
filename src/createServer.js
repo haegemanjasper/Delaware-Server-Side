@@ -3,6 +3,7 @@ const config = require("config");
 const installMiddlewares = require("./core/installMiddlewares");
 const installRest = require("./rest");
 const { initializeLogger, getLogger } = require("./core/logging");
+const {disconnect} = require("./data/DatabaseAccessor");
 
 const NODE_ENV = config.get("env");
 const LOG_LEVEL = config.get('log.level');
@@ -42,6 +43,7 @@ module.exports = async function createServer() {
         },
         async stop() {
             app.removeAllListeners();
+            await disconnect();
             getLogger().info("Server stopped");
         }
     };
