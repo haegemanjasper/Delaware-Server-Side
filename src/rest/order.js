@@ -4,6 +4,7 @@ const { requireAuthentication } = require("../core/auth");
 const { validate } = require("../core/validation");
 const orderService = require("../service/order");
 
+// TODO: check JWT for user role to get the correct data for each user.
 async function getAllOrders(ctx) {
     ctx.body = await orderService.getAll();
 }
