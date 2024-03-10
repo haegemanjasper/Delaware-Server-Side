@@ -29,7 +29,7 @@ async function hashPassword(password) {
  *
  * @param {string} password - Unhashed password to verify.
  * @param {string} passwordHash - The hash to compare the password to.
- * @returns {boolean} - True if the given password matches the passwordHash.
+ * @returns {Promise<boolean>} - True if the given password matches the passwordHash.
  */
 async function verifyPassword(password, passwordHash) {
     const valid = await argon2.verify(passwordHash, password, {

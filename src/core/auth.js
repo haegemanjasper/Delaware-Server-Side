@@ -1,4 +1,4 @@
-const userService = require("../service/user");
+const userService = require("../service/User");
 
 /**
  * Checks if the request has a valid header.

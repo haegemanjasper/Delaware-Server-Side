@@ -31,7 +31,7 @@ export const getAllUsers = async () => {
 
 /**
  * Gets a user based on its username
- * @param username The username.
+ * @param username {string} The username.
  * @returns { Promise<undefined | { username: string, password_hash: string, email: string, phone_nr: string, vat_nr: string, name: string, created_at: string, updated_at: string, active: boolean }>}
  */
 export const getUserByUsername = async (username) => {
@@ -44,7 +44,7 @@ export const getUserByUsername = async (username) => {
 
 /**
  * Gets a user based on its email address
- * @param email The email address.
+ * @param email {string} The email address.
  * @returns { Promise<undefined | { username: string, password_hash: string, email: string, phone_nr: string, vat_nr: string, name: string, created_at: string, updated_at: string, active: boolean }>}
  */
 export const getUserByEmail = async (email) => {
@@ -57,7 +57,7 @@ export const getUserByEmail = async (email) => {
 
 /**
  * Gets a user based on its VAT number
- * @param vat The VAT number.
+ * @param vat {string} The VAT number.
  * @returns { Promise<undefined | { username: string, password_hash: string, email: string, phone_nr: string, vat_nr: string, name: string, created_at: string, updated_at: string, active: boolean }>}
  */
 export const getUserByVat = async (vat) => {
