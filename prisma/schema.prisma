@@ -1,0 +1,169 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Addresses {
+  AddressId Int      @id @default(autoincrement())
+  Street    String   @db.VarChar(150)
+  ZipCode   Int
+  City      String   @db.VarChar(30)
+  Country   String   @db.VarChar(30)
+  CreatedAt DateTime @db.DateTime(0)
+  UpdatedAt DateTime @db.DateTime(0)
+  IsActive  Boolean  @default(true)
+  Username  String   @db.VarChar(20)
+  Users     Users    @relation(fields: [Username], references: [Username], onUpdate: Restrict, map: "Users_FK")
+
+  @@index([Username], map: "Users_FK")
+}
+
+model Addresses_Orders {
+  AddressId Int
+  OrderId   Int
+
+  @@id([AddressId, OrderId])
+}
+
+model Invoices {
+  InvoiceId     Int        @id @default(autoincrement())
+  InvoiceDate   DateTime   @db.Date
+  InvoiceAmount Float      @db.Float
+  BankDetails   String     @db.VarChar(255)
+  CreatedAt     DateTime   @db.DateTime(0)
+  UpdatedAt     DateTime   @db.DateTime(0)
+  IsActive      Boolean    @default(true)
+  Orders        Orders[]
+  Payments      Payments[]
+}
+
+model Notifications {
+  NotificationId Int      @id @default(autoincrement())
+  Date           DateTime @db.Date
+  Text           String   @db.Text
+  Status         String   @db.VarChar(20)
+  CreatedAt      DateTime @db.DateTime(0)
+  UpdatedAt      DateTime @db.DateTime(0)
+  IsActive       Boolean  @default(true)
+  Username       String   @db.VarChar(20)
+  OrderId        Int?
+  Users          Users    @relation(fields: [Username], references: [Username], onUpdate: Restrict, map: "NotificationUsers_FK")
+  Orders         Orders?  @relation(fields: [OrderId], references: [OrderId], onDelete: Restrict, onUpdate: Restrict, map: "NotificationsOrders_FK")
+
+  @@index([Username], map: "NotificationUsers_FK")
+  @@index([OrderId], map: "NotificationsOrders_FK")
+}
+
+model OrderLines {
+  OrderLineId Int      @id @default(autoincrement())
+  Quantity    Int
+  CreatedAt   DateTime @db.DateTime(0)
+  UpdatedAt   DateTime @db.DateTime(0)
+  IsActive    Boolean  @default(true)
+  OrderId     Int
+  Orders      Orders   @relation(fields: [OrderId], references: [OrderId], onUpdate: Restrict, map: "Orders_FK")
+
+  @@index([OrderId], map: "Orders_FK")
+}
+
+model OrderLines_Products {
+  OrderLineId Int
+  ProductId   Int
+
+  @@id([OrderLineId, ProductId])
+}
+
+model Orders {
+  OrderId         Int               @id @default(autoincrement())
+  OrderDate       DateTime          @db.Date
+  DeliveryDate    DateTime?         @db.Date
+  Status          String            @db.VarChar(20)
+  PaymentStatus   String            @db.VarChar(20)
+  OrderReference  String?           @db.VarChar(20)
+  NetAmount       Float             @db.Float
+  TaxAmount       Float             @db.Float
+  TotalAmount     Float             @db.Float
+  Currency        String            @db.VarChar(10)
+  CreatedAt       DateTime          @db.DateTime(0)
+  UpdatedAt       DateTime          @db.DateTime(0)
+  IsActive        Boolean           @default(true)
+  Username        String            @db.VarChar(20)
+  InvoiceId       Int
+  Notifications   Notifications[]
+  OrderLines      OrderLines[]
+  Invoices        Invoices          @relation(fields: [InvoiceId], references: [InvoiceId], onUpdate: Restrict, map: "OrderInvoices_FK")
+  Users           Users             @relation(fields: [Username], references: [Username], onUpdate: Restrict, map: "OrderUsers_FK")
+  PaymentRequests PaymentRequests[]
+
+  @@index([InvoiceId], map: "OrderInvoices_FK")
+  @@index([Username], map: "OrderUsers_FK")
+}
+
+model PaymentRequests {
+  PaymentRequestId     Int      @id @default(autoincrement())
+  PaymentRequestDate   DateTime @db.Date
+  PaymentRequestAmount Float    @db.Float
+  BankDetails          String   @db.VarChar(255)
+  OrderId              Int
+  Orders               Orders   @relation(fields: [OrderId], references: [OrderId], onUpdate: Restrict, map: "PaymentRequestsOrders_FK")
+
+  @@index([OrderId], map: "PaymentRequestsOrders_FK")
+}
+
+model Payments {
+  PaymentId     Int      @id @default(autoincrement())
+  PaymentDate   DateTime @db.Date
+  PaymentAmount Float    @db.Float
+  PaymentMethod Int
+  CreatedAt     DateTime @db.DateTime(0)
+  UpdatedAt     DateTime @db.DateTime(0)
+  IsActive      Boolean  @default(true)
+  InvoiceId     Int
+  Invoices      Invoices @relation(fields: [InvoiceId], references: [InvoiceId], onUpdate: Restrict, map: "Invoices_FK")
+
+  @@index([InvoiceId], map: "Invoices_FK")
+}
+
+model ProductTranslations {
+  ProductTranslationId Int      @id @default(autoincrement())
+  Translation          String   @db.VarChar(32)
+  CreatedAt            DateTime @db.DateTime(0)
+  UpdatedAt            DateTime @db.DateTime(0)
+  IsActive             Boolean  @default(true)
+  ProductId            Int
+  Products             Products @relation(fields: [ProductId], references: [ProductId], onUpdate: Restrict, map: "Products_FK")
+
+  @@index([ProductId], map: "Products_FK")
+}
+
+model Products {
+  ProductId           Int                   @id @default(autoincrement())
+  Price               Float                 @db.Float
+  Stock               Int
+  UnitOfMeasurement   String                @db.VarChar(10)
+  ProductCategory     Int
+  ProductAvailability String                @db.VarChar(10)
+  CreatedAt           DateTime              @db.DateTime(0)
+  UpdatedAt           DateTime              @db.DateTime(0)
+  IsActive            Boolean               @default(true)
+  ProductTranslations ProductTranslations[]
+}
+
+model Users {
+  Username      String          @id @db.VarChar(20)
+  PasswordHash  String          @db.VarChar(64)
+  Email         String          @unique(map: "Email") @db.VarChar(50)
+  PhoneNr       String          @unique(map: "PhoneNr") @db.VarChar(16)
+  VatNr         String          @unique(map: "VatNr") @db.VarChar(16)
+  Name          String          @db.VarChar(30)
+  CreatedAt     DateTime        @db.DateTime(0)
+  UpdatedAt     DateTime        @db.DateTime(0)
+  IsActive      Boolean         @default(true)
+  Addresses     Addresses[]
+  Notifications Notifications[]
+  Orders        Orders[]
+}
