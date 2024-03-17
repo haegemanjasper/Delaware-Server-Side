@@ -3,35 +3,46 @@
  */
 async function getAll() {
     // TEMP: get from database
-    return { 
-        columns: ["orderID", "orderDate", "netAmount", "taxAmount", "totalAmount", "currency", "paymentStatus"],
+    let mockData = { 
+        columns: {
+            sequenceID: "String", 
+            orderDate: "Date",
+            netAmount: "Number", 
+            taxAmount: "Number",
+            totalAmount: "Number",
+            paymentStatus: "String"
+        },
         data: [
-            { orderID: 47072, orderDate: "2020-02-14 08:05:01.0000000", netAmount: 400000,   taxAmount: 80000,    totalAmount: 480000 , currency: "EUR", paymentStatus: "pending" }, 
-            { orderID: 47073, orderDate: "2020-02-14 08:05:09.0000000", netAmount: 1710000,  taxAmount: 342000,   totalAmount: 2052000, currency: "EUR", paymentStatus: "pending" },
-            { orderID: 49121, orderDate: "2020-02-14 15:58:15.0000000", netAmount: 6010800,  taxAmount: 1202200,  totalAmount: 7213000, currency: "EUR", paymentStatus: "received"},
-            { orderID: 49122, orderDate: "2020-02-14 15:58:20.0000000", netAmount: 6010800,  taxAmount: 1202200,  totalAmount: 7213000, currency: "EUR", paymentStatus: "received"},
-            { orderID: 47076, orderDate: "2020-02-14 08:05:26.0000000", netAmount: 1710000,  taxAmount: 342000,   totalAmount: 2052000, currency: "EUR", paymentStatus: "pending" },
-            { orderID: 47072, orderDate: "2020-02-14 08:05:01.0000000", netAmount: 400000,   taxAmount: 80000,    totalAmount: 480000 , currency: "EUR", paymentStatus: "pending" }, 
-            { orderID: 47072, orderDate: "2020-02-14 08:05:01.0000000", netAmount: 400000,   taxAmount: 80000,    totalAmount: 480000 , currency: "EUR", paymentStatus: "pending" }, 
-            { orderID: 47072, orderDate: "2020-02-14 08:05:01.0000000", netAmount: 400000,   taxAmount: 80000,    totalAmount: 480000 , currency: "EUR", paymentStatus: "pending" }, 
-            { orderID: 47073, orderDate: "2020-02-14 08:05:09.0000000", netAmount: 1710000,  taxAmount: 342000,   totalAmount: 2052000, currency: "EUR", paymentStatus: "pending" },
-            { orderID: 49121, orderDate: "2020-02-14 15:58:15.0000000", netAmount: 6010800,  taxAmount: 1202200,  totalAmount: 7213000, currency: "EUR", paymentStatus: "received"},
-            { orderID: 49122, orderDate: "2020-02-14 15:58:20.0000000", netAmount: 6010800,  taxAmount: 1202200,  totalAmount: 7213000, currency: "EUR", paymentStatus: "received"},
-            { orderID: 47076, orderDate: "2020-02-14 08:05:26.0000000", netAmount: 1710000,  taxAmount: 342000,   totalAmount: 2052000, currency: "EUR", paymentStatus: "pending" }, 
-            { orderID: 47073, orderDate: "2020-02-14 08:05:09.0000000", netAmount: 1710000,  taxAmount: 342000,   totalAmount: 2052000, currency: "EUR", paymentStatus: "pending" },
-            { orderID: 49121, orderDate: "2020-02-14 15:58:15.0000000", netAmount: 6010800,  taxAmount: 1202200,  totalAmount: 7213000, currency: "EUR", paymentStatus: "received"},
-            { orderID: 49122, orderDate: "2020-02-14 15:58:20.0000000", netAmount: 6010800,  taxAmount: 1202200,  totalAmount: 7213000, currency: "EUR", paymentStatus: "received"},
-            { orderID: 47076, orderDate: "2020-02-14 08:05:26.0000000", netAmount: 1710000,  taxAmount: 342000,   totalAmount: 2052000, currency: "EUR", paymentStatus: "pending" },
-            { orderID: 47073, orderDate: "2020-02-14 08:05:09.0000000", netAmount: 1710000,  taxAmount: 342000,   totalAmount: 2052000, currency: "EUR", paymentStatus: "pending" },
-            { orderID: 49121, orderDate: "2020-02-14 15:58:15.0000000", netAmount: 6010800,  taxAmount: 1202200,  totalAmount: 7213000, currency: "EUR", paymentStatus: "received"},
-            { orderID: 49122, orderDate: "2020-02-14 15:58:20.0000000", netAmount: 6010800,  taxAmount: 1202200,  totalAmount: 7213000, currency: "EUR", paymentStatus: "received"},
-            { orderID: 47076, orderDate: "2020-02-14 08:05:26.0000000", netAmount: 1710000,  taxAmount: 342000,   totalAmount: 2052000, currency: "EUR", paymentStatus: "pending" },
-            { orderID: 47072, orderDate: "2020-02-14 08:05:01.0000000", netAmount: 400000,   taxAmount: 80000,    totalAmount: 480000 , currency: "EUR", paymentStatus: "pending" }, 
-            { orderID: 47073, orderDate: "2020-02-14 08:05:09.0000000", netAmount: 1710000,  taxAmount: 342000,   totalAmount: 2052000, currency: "EUR", paymentStatus: "pending" },
-            { orderID: 49121, orderDate: "2020-02-14 15:58:15.0000000", netAmount: 6010800,  taxAmount: 1202200,  totalAmount: 7213000, currency: "EUR", paymentStatus: "received"},
-            { orderID: 49122, orderDate: "2020-02-14 15:58:20.0000000", netAmount: 6010800,  taxAmount: 1202200,  totalAmount: 7213000, currency: "EUR", paymentStatus: "received"},
-            { orderID: 47076, orderDate: "2020-02-14 08:05:26.0000000", netAmount: 1710000,  taxAmount: 342000,   totalAmount: 2052000, currency: "EUR", paymentStatus: "pending" }, 
-        ]};
+            { sequenceID: 47072, orderDate: "2020-02-14", netAmount: 400000,   taxAmount: 80000,    totalAmount: 480000,  paymentStatus: "pending" }, 
+            { sequenceID: 47073, orderDate: "2020-02-14", netAmount: 1710000,  taxAmount: 342000,   totalAmount: 2052000, paymentStatus: "pending" },
+            { sequenceID: 49121, orderDate: "2020-02-14", netAmount: 6010800,  taxAmount: 1202200,  totalAmount: 7213000, paymentStatus: "received"},
+            { sequenceID: 49122, orderDate: "2020-02-14", netAmount: 6010800,  taxAmount: 1202200,  totalAmount: 7213000, paymentStatus: "received"},
+            { sequenceID: 47076, orderDate: "2020-02-14", netAmount: 1710000,  taxAmount: 342000,   totalAmount: 2052000, paymentStatus: "pending" },
+            { sequenceID: 47072, orderDate: "2020-02-14", netAmount: 400000,   taxAmount: 80000,    totalAmount: 480000,  paymentStatus: "pending" }, 
+            { sequenceID: 47072, orderDate: "2020-02-14", netAmount: 400000,   taxAmount: 80000,    totalAmount: 480000,  paymentStatus: "pending" }, 
+            { sequenceID: 47072, orderDate: "2020-02-14", netAmount: 400000,   taxAmount: 80000,    totalAmount: 480000,  paymentStatus: "pending" }, 
+            { sequenceID: 47073, orderDate: "2020-02-14", netAmount: 1710000,  taxAmount: 342000,   totalAmount: 2052000, paymentStatus: "pending" },
+            { sequenceID: 49121, orderDate: "2020-02-14", netAmount: 6010800,  taxAmount: 1202200,  totalAmount: 7213000, paymentStatus: "received"},
+            { sequenceID: 49122, orderDate: "2020-02-14", netAmount: 6010800,  taxAmount: 1202200,  totalAmount: 7213000, paymentStatus: "received"},
+            { sequenceID: 47076, orderDate: "2020-02-14", netAmount: 1710000,  taxAmount: 342000,   totalAmount: 2052000, paymentStatus: "pending" }, 
+            { sequenceID: 47073, orderDate: "2020-02-14", netAmount: 1710000,  taxAmount: 342000,   totalAmount: 2052000, paymentStatus: "pending" },
+            { sequenceID: 49121, orderDate: "2020-02-14", netAmount: 6010800,  taxAmount: 1202200,  totalAmount: 7213000, paymentStatus: "received"},
+            { sequenceID: 49122, orderDate: "2020-02-14", netAmount: 6010800,  taxAmount: 1202200,  totalAmount: 7213000, paymentStatus: "received"},
+            { sequenceID: 47076, orderDate: "2020-02-14", netAmount: 1710000,  taxAmount: 342000,   totalAmount: 2052000, paymentStatus: "pending" },
+            { sequenceID: 47073, orderDate: "2020-02-14", netAmount: 1710000,  taxAmount: 342000,   totalAmount: 2052000, paymentStatus: "pending" },
+            { sequenceID: 49121, orderDate: "2020-02-14", netAmount: 6010800,  taxAmount: 1202200,  totalAmount: 7213000, paymentStatus: "received"},
+            { sequenceID: 49122, orderDate: "2020-02-14", netAmount: 6010800,  taxAmount: 1202200,  totalAmount: 7213000, paymentStatus: "received"},
+            { sequenceID: 47076, orderDate: "2020-02-14", netAmount: 1710000,  taxAmount: 342000,   totalAmount: 2052000, paymentStatus: "pending" },
+            { sequenceID: 47072, orderDate: "2020-02-14", netAmount: 400000,   taxAmount: 80000,    totalAmount: 480000,  paymentStatus: "pending" }, 
+            { sequenceID: 47073, orderDate: "2020-02-14", netAmount: 1710000,  taxAmount: 342000,   totalAmount: 2052000, paymentStatus: "pending" },
+            { sequenceID: 49121, orderDate: "2020-02-14", netAmount: 6010800,  taxAmount: 1202200,  totalAmount: 7213000, paymentStatus: "received"},
+            { sequenceID: 49122, orderDate: "2020-02-14", netAmount: 6010800,  taxAmount: 1202200,  totalAmount: 7213000, paymentStatus: "received"},
+            { sequenceID: 47076, orderDate: "2020-02-14", netAmount: 1710000,  taxAmount: 342000,   totalAmount: 2052000, paymentStatus: "pending" }, 
+        ]
+    };
+    mockData["results"] = mockData.data.length;
+
+    return mockData;
 }
 
 /**
