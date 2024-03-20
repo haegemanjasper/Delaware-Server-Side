@@ -1,5 +1,5 @@
-import { prisma } from "./DatabaseAccessor";
-import { getLogger } from "../core/logging";
+const { prisma } = require("./DatabaseAccessor");
+const { getLogger } = require("../core/logging");
 
 /**
  * @param product { null | { ProductId: number, Price: number, Stock: number, UnitOfMeasurement: string, ProductCategory: number, ProductAvailability: string, CreatedAt: Date, UpdatedAt: Date, IsActive: boolean } }
@@ -22,7 +22,7 @@ const mapPrismaType = (product) => (
 /**
  * @returns {Promise<({unit_of_measurement: string, updated_at: Date, price: number, product_id: number, product_availability: string, created_at: Date, active: boolean, stock: number, product_category: number}|undefined)[]>}
  */
-export const getAllProducts = async () => {
+const getAllProducts = async () => {
     const products = await prisma.products.findMany();
     return products.map((product) => mapPrismaType(product));
 };
@@ -32,7 +32,7 @@ export const getAllProducts = async () => {
  * @param id {number}
  * @returns {Promise<{unit_of_measurement: string, updated_at: Date, price: number, product_id: number, product_availability: string, created_at: Date, active: boolean, stock: number, product_category: number}|undefined>}
  */
-export const getProductById = async (id) => {
+const getProductById = async (id) => {
     const product = await prisma.products.findFirst({
         where: { ProductId: id }
     });
@@ -45,7 +45,7 @@ export const getProductById = async (id) => {
  * @param id {number}
  * @returns {Promise<boolean>}
  */
-export const deleteProduct = async (id) => {
+const deleteProduct = async (id) => {
     const product = await getProductById(id);
 
     if (product === undefined) {
@@ -58,4 +58,10 @@ export const deleteProduct = async (id) => {
     });
 
     return true;
+};
+
+module.exports = {
+    getAllProducts,
+    getProductById,
+    deleteProduct
 };

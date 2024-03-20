@@ -1,5 +1,5 @@
-import { prisma } from "./DatabaseAccessor";
-import { getLogger } from "../core/logging";
+const { prisma } = require("./DatabaseAccessor");
+const { getLogger } = require("../core/logging");
 
 /**
  * Maps a Prisma address type to a type that makes a bit more sense to work with.
@@ -23,12 +23,12 @@ const mapPrismaType = (address) => (
 /**
  * @returns {Promise<({country: string, updated_at: Date, city: string, street: string, address_id: number, created_at: Date, active: boolean, zip_code: number, username: string}|undefined)[]>}
  */
-export const getAllAddresses = async () => {
+const getAllAddresses = async () => {
     const addresses = await prisma.addresses.findMany({});
     return addresses.map((address) => mapPrismaType(address));
 };
 
-export const getAddressById = async (id) => {
+const getAddressById = async (id) => {
     const address = await prisma.addresses.findFirst({
         where: { AddressId: id }
     });
@@ -40,7 +40,7 @@ export const getAddressById = async (id) => {
  * @param id { number }
  * @returns {Promise<boolean>}
  */
-export const deleteAddress = async (id) => {
+const deleteAddress = async (id) => {
     const address = await getAddressById(id);
 
     if (address === undefined) {
@@ -53,4 +53,10 @@ export const deleteAddress = async (id) => {
     });
 
     return true;
+};
+
+module.exports = {
+    getAllAddresses,
+    getAddressById,
+    deleteAddress
 };

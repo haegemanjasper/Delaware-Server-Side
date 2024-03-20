@@ -1,5 +1,5 @@
-import { prisma } from "./DatabaseAccessor";
-import { getLogger } from "../core/logging";
+const { prisma } = require("./DatabaseAccessor");
+const { getLogger } = require("../core/logging");
 
 /**
  * Maps a Prisma order type to a type that makes a bit more sense to work with.
@@ -28,7 +28,7 @@ const mapPrismaType = (order) => (
 /**
  * @returns {Promise<({tax_amount: number, order_reference: string, payment_status: string, created_at: Date, active: boolean, order_date: Date, delivery_date: Date, updated_at: Date, total_amount: number, invoice_id: number, currency: string, net_amount: number, order_id: number, status: string}|undefined)[]>}
  */
-export const getAllOrders = async () => {
+const getAllOrders = async () => {
     const orders = await prisma.orders.findMany();
     return orders.map((order) => mapPrismaType(order));
 };
@@ -37,7 +37,7 @@ export const getAllOrders = async () => {
  * @param id{number}
  * @returns {Promise<{tax_amount: number, order_reference: string, payment_status: string, created_at: Date, active: boolean, order_date: Date, delivery_date: Date, updated_at: Date, total_amount: number, invoice_id: number, currency: string, net_amount: number, order_id: number, status: string}|undefined>}
  */
-export const getOrderById = async (id) => {
+const getOrderById = async (id) => {
     const order = await prisma.orders.findFirst({
         where: { OrderId: id }
     });
@@ -49,7 +49,7 @@ export const getOrderById = async (id) => {
  * @param id{number}
  * @returns {Promise<boolean>}
  */
-export const deleteOrder = async (id) => {
+const deleteOrder = async (id) => {
     const order = await getOrderById(id);
 
     if (order === undefined) {
@@ -62,4 +62,10 @@ export const deleteOrder = async (id) => {
     });
 
     return true;
+};
+
+module.exports = {
+    getAllOrders,
+    getOrderById,
+    deleteOrder
 };

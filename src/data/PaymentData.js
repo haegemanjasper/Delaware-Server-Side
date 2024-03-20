@@ -1,5 +1,5 @@
-import { prisma } from "./DatabaseAccessor";
-import { getLogger } from "../core/logging";
+const { prisma } = require("./DatabaseAccessor");
+const { getLogger } = require("../core/logging");
 
 /**
  * Maps a Prisma payment to a type that makes a bit more sense to work with.
@@ -22,7 +22,7 @@ const mapPrismaType = (payment) => (
 /**
  * @returns {Promise<({updated_at: Date, payment_id: number, payment_amount: number, invoice_id: number, created_at: Date, active: boolean, payment_date: Date, payment_method: number}|undefined)[]>}
  */
-export const getAllPayments = async () => {
+const getAllPayments = async () => {
     const payments = await prisma.payments.findMany();
     return payments.map((payment) => mapPrismaType(payment));
 };
@@ -32,7 +32,7 @@ export const getAllPayments = async () => {
  * @param id {number}
  * @returns {Promise<{updated_at: Date, payment_id: number, payment_amount: number, invoice_id: number, created_at: Date, active: boolean, payment_date: Date, payment_method: number}|undefined>}
  */
-export const getPaymentById = async (id) => {
+const getPaymentById = async (id) => {
     const payment = await prisma.payments.findFirst({
         where: { PaymentId: id }
     });
@@ -45,7 +45,7 @@ export const getPaymentById = async (id) => {
  * @param id{number}
  * @returns {Promise<boolean>}
  */
-export const deletePayment = async (id) => {
+const deletePayment = async (id) => {
     const payment = await getPaymentById(id);
 
     if (payment === undefined) {
@@ -58,4 +58,10 @@ export const deletePayment = async (id) => {
     });
 
     return true;
+};
+
+module.exports = {
+    getAllPayments,
+    getPaymentById,
+    deletePayment
 };
