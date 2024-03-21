@@ -57,3 +57,9 @@ const deleteOrderLine = async (id) => {
 
     return true;
 };
+
+module.exports = {
+    getAllOrderLines,
+    getOrderLineById,
+    deleteOrderLine
+};
