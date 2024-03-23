@@ -78,8 +78,7 @@ login.validationScheme = {
     })
 };
 
-
-export default (app) => {
+module.exports = (app) => {
     const router = new Router({ prefix: "/users" });
 
     router.post("/register", validate(register.validationScheme), register);
