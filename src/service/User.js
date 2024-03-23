@@ -1,15 +1,15 @@
-import {createUser, deleteUser, getAllUsers, getUserByEmail, getUserByUsername, updateUser} from "../data/UserData";
-import ServiceError from "../core/serviceError";
-import {hash} from "argon2";
-import {getLogger} from "../core/logging";
-import {generateJWT, verifyJWT} from "../core/jwt";
-import {verifyPassword} from "../core/password";
+const {createUser, deleteUser, getAllUsers, getUserByEmail, getUserByUsername, updateUser} = require("../data/UserData");
+const ServiceError = require("../core/serviceError");
+const {hash} = require("argon2");
+const {getLogger} = require("../core/logging");
+const {generateJWT, verifyJWT} = require("../core/jwt");
+const {verifyPassword} = require("../core/password");
 
 /**
  * Gets all users, without their password hash.
  * @returns {Promise<{count: number, items: ({vat_nr: string, updated_at: string, phone_nr: string, name: string, created_at: string, active: boolean, email: string, username: string}|undefined)[]}>}
  */
-export const getAll = async () => {
+const getAll = async () => {
     const users = await getAllUsers();
     users.map(user => delete user.password_hash);
 
@@ -22,7 +22,7 @@ export const getAll = async () => {
  * @returns {Promise<{username: string, email: string, phone_nr: string, vat_nr: string, name: string, created_at: string, updated_at: string, active: boolean}>}
  * @throws ServiceError if the username does not resolve to a valid User.
  */
-export const getByUsername = async (username) => {
+const getByUsername = async (username) => {
     const user = await getUserByUsername(username);
 
     if (user === undefined) throw ServiceError.notFound(`A user with username '${username}' could not be found`);
@@ -36,14 +36,14 @@ export const getByUsername = async (username) => {
  * @param user { { username: string, password_hash: string, email: string, phone_nr: string, vat_nr: string, name: string } }
  * @returns {Promise<{username: string, password_hash: string, email: string, phone_nr: string, vat_nr: string, name: string, created_at: string, updated_at: string, active: boolean}|undefined>}
  */
-export const create = async (user) => await createUser(user);
+const create = async (user) => await createUser(user);
 
 /**
  * Updates a user
  * @param user {{ username?: string, password_hash?: string, email?: string, phone_nr?: string, vat_nr?: string, name?: string } }
  * @returns {Promise<{username: string, password_hash: string, email: string, phone_nr: string, vat_nr: string, name: string, created_at: string, updated_at: string, active: boolean}|undefined>}
  */
-export const updateByUsername = async (user) => {
+const updateByUsername = async (user) => {
     const user2 = await getByUsername(user.username);
     return await updateUser(user2.username, { ...user });
 };
@@ -54,12 +54,12 @@ export const updateByUsername = async (user) => {
  * @returns {Promise<void>}
  * @throws ServiceError when the username cannot be resolved to a valid user.
  */
-export const deleteByUsername = async (username) => {
+const deleteByUsername = async (username) => {
     const success = await deleteUser(username);
     if (!success) throw ServiceError.notFound(`A User with username '${username}' could not be found`);
 };
 
-export const register = async (user) => {
+const register = async (user) => {
     const password_hash = await hash(user.password);
 
     const user2 = await createUser({ password_hash, ...user });
@@ -82,7 +82,7 @@ const makeLoginData = async (user) => {
     };
 };
 
-export const login = async (email, password) => {
+const login = async (email, password) => {
     const user = await getUserByEmail(email);
 
     if (user === undefined) throw ServiceError.unauthorized("The given email and/or password is incorrect.");
@@ -94,7 +94,7 @@ export const login = async (email, password) => {
     return await makeLoginData(user);
 };
 
-export const checkAndParseSession = async (header) => {
+const checkAndParseSession = async (header) => {
     if (header === undefined) throw ServiceError.unauthorized("You need to be signed in.");
     if (!header.startsWith("Bearer ")) throw ServiceError.unauthorized("Invalid authentication token.");
 
@@ -107,4 +107,14 @@ export const checkAndParseSession = async (header) => {
         getLogger().error(error.message, { error });
         throw new Error(error.message);
     }
+};
+
+module.exports = {
+    getAll,
+    getByUsername,
+    create,
+    updateByUsername,
+    register,
+    login,
+    checkAndParseSession
 };

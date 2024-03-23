@@ -1,8 +1,8 @@
-import * as userService from "../service/User";
-import * as Joi from "joi";
-import Router from "@koa/router";
-import {validate} from "../core/validation";
-import {requireAuthentication} from "../core/auth";
+const userService = require("../service/User");
+const Joi = require("joi");
+const Router = require("@koa/router");
+const {validate} = require("../core/validation");
+const {requireAuthentication} = require("../core/auth");
 
 const getAllUsers = async (ctx) => {
     ctx.body = await userService.getAll();
