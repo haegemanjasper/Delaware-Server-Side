@@ -1,5 +1,5 @@
-import {prisma} from "./DatabaseAccessor";
-import {getLogger} from "../core/logging";
+const {prisma} = require("./DatabaseAccessor");
+const {getLogger} = require("../core/logging");
 
 /**
  * Maps a Prisma user type to a type that makes a bit more sense to work with.
@@ -24,7 +24,7 @@ const mapPrismaType = (user) => (
  * Gets all Users.
  * @returns {Promise<({vat_nr: string, updated_at: string, phone_nr: string, password_hash: string, name: string, created_at: string, active: boolean, email: string, username: string}|undefined)[]>}
  */
-export const getAllUsers = async () => {
+const getAllUsers = async () => {
     const users = await prisma.users.findMany();
     return users.map((user)=> mapPrismaType(user));
 };
@@ -34,7 +34,7 @@ export const getAllUsers = async () => {
  * @param username {string} The username.
  * @returns { Promise<undefined | { username: string, password_hash: string, email: string, phone_nr: string, vat_nr: string, name: string, created_at: string, updated_at: string, active: boolean }>}
  */
-export const getUserByUsername = async (username) => {
+const getUserByUsername = async (username) => {
     const user = await prisma.users.findFirst({
         where: { Username: username }
     });
@@ -47,7 +47,7 @@ export const getUserByUsername = async (username) => {
  * @param email {string} The email address.
  * @returns { Promise<undefined | { username: string, password_hash: string, email: string, phone_nr: string, vat_nr: string, name: string, created_at: string, updated_at: string, active: boolean }>}
  */
-export const getUserByEmail = async (email) => {
+const getUserByEmail = async (email) => {
     const user = await prisma.users.findFirst({
         where: { Email: email }
     });
@@ -60,7 +60,7 @@ export const getUserByEmail = async (email) => {
  * @param vat {string} The VAT number.
  * @returns { Promise<undefined | { username: string, password_hash: string, email: string, phone_nr: string, vat_nr: string, name: string, created_at: string, updated_at: string, active: boolean }>}
  */
-export const getUserByVat = async (vat) => {
+const getUserByVat = async (vat) => {
     const user = await prisma.users.findFirst({
         where: { VatNr: vat }
     });
@@ -78,7 +78,7 @@ export const getUserByVat = async (vat) => {
  * @param name {string}
  * @returns { Promise<undefined | { username: string, password_hash: string, email: string, phone_nr: string, vat_nr: string, name: string, created_at: string, updated_at: string, active: boolean }>}
  */
-export const createUser = async ({ username, password_hash, email, phone_nr, vat_nr, name }) => {
+const createUser = async ({ username, password_hash, email, phone_nr, vat_nr, name }) => {
     const user = await prisma.users.create({
         data: {
             Username: username,
@@ -104,7 +104,7 @@ export const createUser = async ({ username, password_hash, email, phone_nr, vat
  * @param name {string}
  * @returns { Promise<undefined | { username: string, password_hash: string, email: string, phone_nr: string, vat_nr: string, name: string, created_at: string, updated_at: string, active: boolean }>}
  */
-export const updateUser = async (username, { password_hash, email, phone_nr, vat_nr, name }) => {
+const updateUser = async (username, { password_hash, email, phone_nr, vat_nr, name }) => {
     const user = await getUserByUsername(username);
 
     if (user === undefined) {
@@ -132,7 +132,7 @@ export const updateUser = async (username, { password_hash, email, phone_nr, vat
  * @param username The username.
  * @returns {Promise<boolean>}
  */
-export const deleteUser = async (username) => {
+const deleteUser = async (username) => {
     const user = await getUserByUsername(username);
 
     if (user === undefined) {
@@ -144,3 +144,13 @@ export const deleteUser = async (username) => {
         where: { Username: username }
     });
 };
+
+module.exports = {
+    getAllUsers,
+    getUserByUsername,
+    getUserByEmail,
+    getUserByVat,
+    createUser,
+    updateUser,
+    deleteUser,
+}

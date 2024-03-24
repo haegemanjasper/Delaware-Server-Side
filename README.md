@@ -19,6 +19,17 @@ AUTH_JWT_SECRET=eenveeltemoeilijksecretdatniemandooitzalradenandersisdesitegehac
     -   `GET /api/health/version`
 -   **user**
     -   `POST /users/login`
+-   **order**
+    -   `GET /orders?limit=&offset=&filter={}&sort={}`
+    -   `GET /orders/:id?limit=&offset=&filter={}&sort={}`
+
+## Query params
+
+-   **limit**: The amount of resources that the response contains.
+-   **offset**: The start index of the resource.
+-   **filter**:
+-   **sort**: Encoded URI containing a JSON string. The key point to a column and the value to the sorting order (asc, desc).
+    Columns with no coresponding key are not sorted.
 
 ## Tests
 
