@@ -1,10 +1,10 @@
 # 2024-backend-a02
 
-Brent Van den Abbeel: [TheAlgorithm476](https://github.com/TheAlgorithm476)
-Friso De Backer: [Zurha](https://github.com/Zurha)
-Jasper Haegeman: [JasperHmn](https://github.com/JasperHmn)
-Robbe Van den Broeck: [Robbe Van den Broeck](https://github.com/Robbe-VandenBroeck)
-Sander Wauters: [SanderWauters](https://github.com/SanderWauters)
+-   Brent Van den Abbeel: [TheAlgorithm476](https://github.com/TheAlgorithm476)
+-   Friso De Backer: [Zurha](https://github.com/Zurha)
+-   Jasper Haegeman: [JasperHmn](https://github.com/JasperHmn)
+-   Robbe Van den Broeck: [Robbe Van den Broeck](https://github.com/Robbe-VandenBroeck)
+-   Sander Wauters: [SanderWauters](https://github.com/SanderWauters)
 
 ## Startup
 
