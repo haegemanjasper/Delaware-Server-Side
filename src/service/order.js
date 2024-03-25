@@ -64,6 +64,11 @@ async function getById(id, limit, offset, filter, sort) {
         customerName: "John Doe",
         customerPhoneNr: 123456789,
         customerAddress: "Geraard de Duivelstraat 5 9000 Gent",
+        supplierName: "Jane Doe",
+        supplierAddress: "Geraard de Duivelstraat 5 9000 Gent",
+        supplierVatNr: 123456789,
+        supplierAccountNr: 123456789,
+        structuredCommunication: "+++090/9337/55493++",
         products: {
             columns: {
                 product: "String",
