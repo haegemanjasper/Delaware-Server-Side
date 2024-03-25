@@ -13,7 +13,7 @@ const orders = [
       UpdatedAt: new Date(),
       IsActive: true,
       Username: 'Brakkert', 
-      InvoiceId: 1 // Example invoice ID
+      InvoiceId: 1 
     },
     {
       OrderDate: new Date('2024-03-15'), 
