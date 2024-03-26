@@ -30,7 +30,8 @@
     "koa": "^2.15.0",
     "koa-bodyparser": "^4.4.1",
     "koa-helmet": "^7.0.2",
-    "winston": "^3.11.0"
+    "winston": "^3.11.0",
+    "ws": "^8.16.0"
   },
   "devDependencies": {
     "env-cmd": "^10.1.0",
