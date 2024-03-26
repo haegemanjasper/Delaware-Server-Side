@@ -78,7 +78,6 @@ login.validationScheme = {
     })
 };
 
-
 module.exports = (app) => {
     const router = new Router({ prefix: "/users" });
 

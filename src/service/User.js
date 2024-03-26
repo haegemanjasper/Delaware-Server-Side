@@ -120,4 +120,4 @@ module.exports = {
     makeLoginData,
     login,
     checkAndParseSession
-}
+};

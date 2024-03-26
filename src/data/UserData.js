@@ -152,5 +152,5 @@ module.exports = {
     getUserByVat,
     createUser,
     updateUser,
-    deleteUser,
-}
+    deleteUser
+};
