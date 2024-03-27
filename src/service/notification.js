@@ -5,6 +5,17 @@ const {
     getNotificationById,
 } = require("../data/NotificationData");
 const ServiceError = require("../core/serviceError");
+const { not } = require("joi");
+
+const notificationCallbacks = [];
+
+const startListeningForNotifications = (callback) => {
+    notificationCallbacks.push(callback);
+};
+
+const sendNotificationToUsers = (notification) => {
+    notificationCallbacks.forEach((callback) => callback(notification));
+};
 
 /**
  * Haalt alle notificaties op.
@@ -54,4 +65,6 @@ module.exports = {
     getById,
     create,
     deleteById,
+    startListeningForNotifications,
+    sendNotificationToUsers,
 };

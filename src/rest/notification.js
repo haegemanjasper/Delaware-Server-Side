@@ -34,7 +34,7 @@ createNotification.validationScheme = {
 
 const deleteNotification = async (ctx) => {
     await notificationService.delete(ctx.params.id);
-    ctx.status = 204; // No Content
+    ctx.status = 204;
 };
 
 deleteNotification.validationScheme = {
