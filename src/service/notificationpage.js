@@ -7,16 +7,6 @@ const {
 const ServiceError = require("../core/serviceError");
 const { not } = require("joi");
 
-const notificationCallbacks = [];
-
-const startListeningForNotifications = (callback) => {
-    notificationCallbacks.push(callback);
-};
-
-const sendNotificationToUsers = (notification) => {
-    notificationCallbacks.forEach((callback) => callback(notification));
-};
-
 /**
  * Haalt alle notificaties op.
  * @returns {Promise<{count: number, items: ({id: string, message: string, userId: string, createdAt: string, updatedAt: string}|undefined)[]}>}
@@ -65,6 +55,4 @@ module.exports = {
     getById,
     create,
     deleteById,
-    startListeningForNotifications,
-    sendNotificationToUsers,
 };

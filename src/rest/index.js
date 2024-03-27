@@ -1,8 +1,8 @@
 const Router = require("@koa/router");
 const installHealthRouter = require("./health");
 const installUserRouter = require("./user");
-const installNotificationRouter = require("./notification");
-const notificationService = require("../service/notification");
+const installNotificationRouter = require("./notificationpage");
+const notificationService = require("../service/notificationpage");
 
 /**
  * Installs all routers in the given Koa application.
@@ -19,8 +19,4 @@ module.exports = (app) => {
     installNotificationRouter(router);
 
     app.use(router.routes()).use(router.allowedMethods());
-
-    notificationService.startListeningForNotifications((notifications) => {
-        console.log("Received notifications:", notifications);
-    });
 };
