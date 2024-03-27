@@ -1,6 +1,6 @@
 const { PrismaClient  } = require('@prisma/client')
 
-const users = require('./seeds/usersSeed');
+const getUsers = require('./seeds/usersSeed');
 const products = require('./seeds/productsSeed');
 const productTranslations = require('./seeds/productTranslationsSeed');
 const payments = require('./seeds/paymentsSeed');
@@ -16,6 +16,7 @@ const addresses = require('./seeds/addressesSeed');
 const prisma = new PrismaClient();
 
 async function seed(){
+    const users =  await getUsers();
     try {
         for (const userData of users) {
           await prisma.users.upsert({

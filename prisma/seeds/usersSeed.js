@@ -1,7 +1,10 @@
-const users = [
+const { hashPassword } = require('../../src/core/password.js');
+
+async function getUsers() {
+  let users = [
     {
       Username: 'Brakkert',
-      PasswordHash: 'hashed_password_1',
+      PasswordHash: await hashPassword('hashed_password_1'),
       Email: 'Brakkert@example.com',
       PhoneNr: '1234567890',
       VatNr: 'VAT123456',
@@ -13,7 +16,7 @@ const users = [
     },
     {
       Username: 'Espera',
-      PasswordHash: 'hashed_password_2',
+      PasswordHash: await hashPassword('hashed_password_2'),
       Email: 'Espera@example.com',
       PhoneNr: '0987654321',
       VatNr: 'VAT654321',
@@ -25,7 +28,7 @@ const users = [
     },
     {
       Username: 'Zurha',
-      PasswordHash: 'hashed_password_3',
+      PasswordHash: await hashPassword('hashed_password_3'),
       Email: 'Zurha@example.com',
       PhoneNr: '567891234',
       VatNr: 'VAT567891',
@@ -36,6 +39,8 @@ const users = [
       Role: "Administrator"
     }
   ];
-  
-  module.exports = users;
-  
+
+  return users;
+}
+
+module.exports = getUsers;
