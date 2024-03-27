@@ -160,21 +160,11 @@ model Users {
   PhoneNr       String          @unique(map: "PhoneNr") @db.VarChar(16)
   VatNr         String          @unique(map: "VatNr") @db.VarChar(16)
   Name          String          @db.VarChar(30)
-  RoleId        Int
+  Role          String          @db.VarChar(32)
   CreatedAt     DateTime        @db.DateTime(0)
   UpdatedAt     DateTime        @db.DateTime(0)
   IsActive      Boolean         @default(true)
   Addresses     Addresses[]
   Notifications Notifications[]
   Orders        Orders[]
-
-  @@index([RoleId], map: "Roles_FK")
-}
-
-model Roles {
-  RoleId    Int      @id @default(autoincrement())
-  RoleName  String   @db.VarChar(32)
-  CreatedAt DateTime @db.DateTime(0)
-  UpdatedAt DateTime @db.DateTime(0)
-  IsActive  Boolean  @default(true)
 }
