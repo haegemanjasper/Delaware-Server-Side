@@ -4,6 +4,7 @@ const installUserRouter = require("./user");
 const installNotificationRouter = require("./notification");
 const notificationService = require("../service/notification");
 const installOrderRouter = require("./order");
+const installAddressRouter = require("./address");
 
 /**
  * Installs all routers in the given Koa application.
@@ -19,6 +20,7 @@ module.exports = (app) => {
     installUserRouter(router);
     installNotificationRouter(router);
     installOrderRouter(router);
+    installAddressRouter(router);
 
     app.use(router.routes()).use(router.allowedMethods());
 }
