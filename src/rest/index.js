@@ -1,8 +1,8 @@
 const Router = require("@koa/router");
 const installHealthRouter = require("./health");
 const installUserRouter = require("./user");
-const installNotificationRouter = require("./notificationpage");
-const notificationService = require("../service/notificationpage");
+const installNotificationRouter = require("./notification");
+const notificationService = require("../service/notification");
 
 /**
  * Installs all routers in the given Koa application.

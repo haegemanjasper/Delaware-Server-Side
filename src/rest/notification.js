@@ -1,4 +1,4 @@
-const notificationService = require("../service/notificationpage");
+const notificationService = require("../service/notification");
 const Joi = require("joi");
 const Router = require("@koa/router");
 const { validate } = require("../core/validation");
