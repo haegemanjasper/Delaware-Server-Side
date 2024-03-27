@@ -9,27 +9,6 @@ const users = [
       CreatedAt: new Date(),
       UpdatedAt: new Date(),
       IsActive: true,
-      Addresses: [
-        {
-          street: '123 Street St',
-          city: 'Cityville',
-          country: 'Countryland',
-          postalCode: '12345'
-        }
-      ],
-      Notifications: [
-        {
-          message: 'Notification 1',
-          date: new Date()
-        }
-      ],
-      Orders: [
-        {
-          orderNumber: 'ORD123',
-          totalAmount: 100,
-          date: new Date()
-        }
-      ]
     },
     {
       Username: 'Espera',
@@ -41,27 +20,6 @@ const users = [
       CreatedAt: new Date(),
       UpdatedAt: new Date(),
       IsActive: true,
-      Addresses: [
-        {
-          street: '456 Avenue Ave',
-          city: 'Townsville',
-          country: 'Countryland',
-          postalCode: '54321'
-        }
-      ],
-      Notifications: [
-        {
-          message: 'Notification 2',
-          date: new Date()
-        }
-      ],
-      Orders: [
-        {
-          orderNumber: 'ORD456',
-          totalAmount: 200,
-          date: new Date()
-        }
-      ]
     }
   ];
   

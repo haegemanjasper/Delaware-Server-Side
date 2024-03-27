@@ -1,5 +1,6 @@
 const addresses = [
     {
+      AddressId: 1,
       Street: 'KattenStraat',
       ZipCode: 9300,
       City: 'Aalst',
@@ -10,6 +11,7 @@ const addresses = [
       Username: 'Brakkert'
     },
     {
+      AddressId: 2,
       Street: 'Zonnestraat',
       ZipCode: 9300,
       City: 'Aalst',

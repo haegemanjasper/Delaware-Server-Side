@@ -1,5 +1,6 @@
 const products = [
     {
+      ProductId: 1,
       Price: 10.99,
       Stock: 100,
       UnitOfMeasurement: 'unit',
@@ -8,20 +9,9 @@ const products = [
       CreatedAt: new Date(),
       UpdatedAt: new Date(),
       IsActive: true,
-      ProductTranslations: [
-        {
-          language: 'en',
-          name: 'Iphone 12',
-          description: 'Description of Product'
-        },
-        {
-          language: 'nl',
-          name: 'Iphone 12',
-          description: 'Beschrijving van product'
-        }
-      ]
     },
     {
+      ProductId: 2,
       Price: 15.99,
       Stock: 50,
       UnitOfMeasurement: 'unit',
@@ -30,18 +20,6 @@ const products = [
       CreatedAt: new Date(),
       UpdatedAt: new Date(),
       IsActive: true,
-      ProductTranslations: [
-        {
-          language: 'en',
-          name: 'Playstation 5',
-          description: 'Description of Product 2'
-        },
-        {
-          language: 'nl',
-          name: 'Playstation 5',
-          description: 'Beschrijving van product'
-        }
-      ]
     }
   ];
   

@@ -1,5 +1,6 @@
 const orderLines = [
     {
+      OrderLineId: 1,
       Quantity: 2,
       CreatedAt: new Date(),
       UpdatedAt: new Date(),
@@ -7,6 +8,7 @@ const orderLines = [
       OrderId: 1 
     },
     {
+      OrderLineId: 2,
       Quantity: 3,
       CreatedAt: new Date(),
       UpdatedAt: new Date(),

@@ -1,5 +1,6 @@
 const notifications = [
     {
+      NotificationId: 1,
       Date: new Date('2024-03-18'), 
       Text: 'Notification 1',
       Status: 'Pending',
@@ -10,6 +11,7 @@ const notifications = [
       OrderId: 1 
     },
     {
+      NotificationId: 2,
       Date: new Date('2024-03-23'),
       Text: 'Notification 2',
       Status: 'Sent',

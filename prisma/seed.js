@@ -19,7 +19,7 @@ async function seed(){
     try {
         for (const userData of users) {
           await prisma.users.upsert({
-            where: { email: userData.Email },
+            where: { Email: userData.Email },
             update: {},
             create: userData,
           });
@@ -41,6 +41,14 @@ async function seed(){
           });
         }
 
+        for (const invoiceData of invoices) {
+          await prisma.invoices.upsert({
+            where: { InvoiceId: invoiceData.InvoiceId },
+            update: {},
+            create: invoiceData,
+          });
+        }  
+
         for (const paymentData of payments) {
             await prisma.payments.upsert({
               where: { PaymentId: paymentData.PaymentId },
@@ -49,6 +57,14 @@ async function seed(){
             });
           }
 
+          for (const orderData of orders) {
+            await prisma.orders.upsert({
+              where: { OrderId: orderData.OrderId },
+              update: {},
+              create: orderData,
+            });
+          }   
+
         for (const paymentRequestData of paymentRequests) {
             await prisma.paymentRequests.upsert({
               where: { PaymentRequestId: paymentRequestData.PaymentRequestId },
@@ -56,22 +72,16 @@ async function seed(){
               create: paymentRequestData,
             });
           }  
-
-        for (const orderData of orders) {
-            await prisma.orders.upsert({
-              where: { OrderId: orderData.OrderId },
-              update: {},
-              create: orderData,
-            });
-          } 
           
         for (const orderLineProductData of orderLinesProducts) {
             await prisma.orderLines_Products.upsert({
-              where: { OrderLineId: orderLineProductData.OrderLineId },
+              where: { OrderLineId_ProductId: { OrderLineId: orderLineProductData.OrderLineId, ProductId: orderLineProductData.ProductId } },
               update: {},
               create: orderLineProductData,
             });
           }
+          
+          
           
         for (const orderLineData of orderLines) {
             await prisma.orderLines.upsert({
@@ -88,22 +98,6 @@ async function seed(){
               create: notificationData,
             });
           } 
-          
-        for (const invoiceData of invoices) {
-            await prisma.invoices.upsert({
-              where: { InvoiceId: invoiceData.InvoiceId },
-              update: {},
-              create: invoiceData,
-            });
-          }  
-
-        for (const addressOrderData of addressesOrders) {
-            await prisma.addresses_Orders.upsert({
-              where: { AddressId: addressOrderData.AddressId },
-              update: {},
-              create: addressOrderData,
-            });
-          }  
 
         for (const addressData of addresses) {
             await prisma.addresses.upsert({
@@ -111,7 +105,20 @@ async function seed(){
               update: {},
               create: addressData,
             });
-          }  
+          }   
+          
+
+        for (const addressOrderData of addressesOrders) {
+            await prisma.addresses_Orders.upsert({
+              where: { AddressId_OrderId: { AddressId: addressOrderData.AddressId, OrderId: addressOrderData.OrderId } },
+              update: {},
+              create: addressOrderData,
+            });
+          }
+          
+          
+
+ 
     
         console.log('Seed data inserted successfully!');
       } catch (error) {
