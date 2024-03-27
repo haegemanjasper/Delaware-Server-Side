@@ -81,8 +81,6 @@ async function seed(){
             });
           }
           
-          
-          
         for (const orderLineData of orderLines) {
             await prisma.orderLines.upsert({
               where: { OrderLineId: orderLineData.OrderLineId },
@@ -107,7 +105,6 @@ async function seed(){
             });
           }   
           
-
         for (const addressOrderData of addressesOrders) {
             await prisma.addresses_Orders.upsert({
               where: { AddressId_OrderId: { AddressId: addressOrderData.AddressId, OrderId: addressOrderData.OrderId } },
@@ -115,11 +112,7 @@ async function seed(){
               create: addressOrderData,
             });
           }
-          
-          
 
- 
-    
         console.log('Seed data inserted successfully!');
       } catch (error) {
         console.error('Error seeding database:', error);
