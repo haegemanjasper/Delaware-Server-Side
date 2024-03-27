@@ -1,0 +1,31 @@
+-- CreateRoles
+CREATE TABLE `Roles` (
+    `RoleId` INTEGER NOT NULL AUTO_INCREMENT,
+    `RoleName` VARCHAR(32) NOT NULL,
+    `CreatedAt` DATETIME(0) NOT NULL,
+    `UpdatedAt` DATETIME(0) NOT NULL,
+    `IsActive` BOOLEAN NOT NULL DEFAULT true,
+
+    PRIMARY KEY (`RoleId`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+CREATE TRIGGER Roles_Insert
+    BEFORE INSERT ON Roles
+    FOR EACH ROW
+BEGIN
+    SET NEW.CreatedAt = NOW();
+    SET NEW.UpdatedAt = NOW();
+END;
+
+CREATE TRIGGER Roles_Update
+    BEFORE UPDATE ON Roles
+    FOR EACH ROW
+BEGIN
+    SET NEW.UpdatedAt = NOW();
+END;
+
+-- UpdateUsers
+ALTER TABLE `Users` ADD COLUMN `RoleId` INTEGER;
+
+-- AddForeignKey
+ALTER TABLE `Users` ADD CONSTRAINT `Roles_FK` FOREIGN KEY (`RoleId`) REFERENCES `Roles`(`RoleId`) ON DELETE RESTRICT ON UPDATE RESTRICT;

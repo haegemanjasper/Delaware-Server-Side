@@ -41,6 +41,26 @@ const getNotificationById = async (id) => {
 };
 
 /**
+ * @param date{Date}
+ * @param text{string}
+ * @param status{string}
+ * @param username{string}
+ * @returns {Promise<{date: Date, updated_at: Date, created_at: Date, active: boolean, notification_id: number, text: string, status: string, username: string}|undefined>}
+ */
+const createNotification = async (date, text, status, username) => {
+    const notification = await prisma.notifications.create({
+        data: {
+            Date: date,
+            Text: text,
+            Status: status,
+            Username: username
+        }
+    });
+
+    return mapPrismaType(notification);
+};
+
+/**
  *
  * @param id{number}
  * @returns {Promise<boolean>}
