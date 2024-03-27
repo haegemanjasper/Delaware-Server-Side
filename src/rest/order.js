@@ -9,8 +9,8 @@ async function getAllOrders(ctx) {
     ctx.body = await orderService.getAll(
         ctx.request.query.limit,
         ctx.request.query.offset,
-        JSON.parse(decodeURIComponent(ctx.request.query.sort)),
-        JSON.parse(decodeURIComponent(ctx.request.query.filter))
+        JSON.parse(decodeURIComponent(ctx.request.query.filter)),
+        JSON.parse(decodeURIComponent(ctx.request.query.sort))
     );
 }
 getAllOrders.validationScheme = {

@@ -21,5 +21,5 @@ const disconnect = async () => {
 module.exports = {
     prisma,
     databaseOnline,
-    disconnect,
-}
+    disconnect
+};

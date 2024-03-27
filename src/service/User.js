@@ -114,10 +114,7 @@ module.exports = {
     getByUsername,
     create,
     updateByUsername,
-    deleteByUsername,
     register,
-    makeExposedUser,
-    makeLoginData,
     login,
     checkAndParseSession
-}
+};

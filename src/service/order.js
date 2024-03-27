@@ -1,48 +1,68 @@
+const { getProductsByQuery } = require("../data/ProductData");
+const { getOrdersByQuery, getOrderById } = require("../data/OrderData");
+const ServiceError = require("../core/serviceError");
+
+function parseFilterParams(filter) {
+    Object.keys(filter).forEach(key => {
+        if (typeof filter[key] === "object") {
+            let bounds = {};
+            if (filter[key]["min"])
+                bounds.gte = Number(filter[key]["min"]);
+            if (filter[key]["max"])
+                bounds.lte = Number(filter[key]["max"])
+
+            return filter[key] = bounds;
+        }
+        return filter[key] = {
+            contains: filter[key]
+        };
+    });
+    return filter;
+}
+
+function parseSortingParams(sort) {
+    return Object.entries(sort).map(([key, value]) => ({
+        [key]: value
+    }));
+}
+
 /**
  * @returns (object)
  */
 async function getAll(limit, offset, filter, sort) {
-    // TEMP: get from database
-    let mockData = { 
+    const data = await getOrdersByQuery(Number(limit), Number(offset) - 1, parseFilterParams(filter), parseSortingParams(sort));
+    if (!data.orders) {
+        throw ServiceError.notFound(`No orders found`);
+    } 
+    let formatedOrders = {
         columns: {
-            sequenceID: "String", 
-            orderDate: "Date",
-            net: "Number", 
-            VAT: "Number",
-            total: "Number",
-            paymentStatus: "String"
+            OrderId: "Number",
+            OrderDate: "Date",
+            NetAmount: "Number",
+            TaxAmount: "Number",
+            TotalAmount: "Number",
+            PaymentStatus: "String"
         },
-        data: [
-            { id: 1,  sequenceID: 47072, orderDate: "2020-02-14", net: 400000,   VAT: 80000,    total: 480000,  paymentStatus: "pending" }, 
-            { id: 2,  sequenceID: 47073, orderDate: "2020-02-14", net: 1710000,  VAT: 342000,   total: 2052000, paymentStatus: "pending" },
-            { id: 3,  sequenceID: 49121, orderDate: "2020-02-14", net: 6010800,  VAT: 1202200,  total: 7213000, paymentStatus: "received"},
-            { id: 4,  sequenceID: 49122, orderDate: "2020-02-14", net: 6010800,  VAT: 1202200,  total: 7213000, paymentStatus: "received"},
-            { id: 5,  sequenceID: 47076, orderDate: "2020-02-14", net: 1710000,  VAT: 342000,   total: 2052000, paymentStatus: "pending" },
-            { id: 6,  sequenceID: 47072, orderDate: "2020-02-14", net: 400000,   VAT: 80000,    total: 480000,  paymentStatus: "pending" }, 
-            { id: 7,  sequenceID: 47072, orderDate: "2020-02-14", net: 400000,   VAT: 80000,    total: 480000,  paymentStatus: "pending" }, 
-            { id: 8,  sequenceID: 47072, orderDate: "2020-02-14", net: 400000,   VAT: 80000,    total: 480000,  paymentStatus: "pending" }, 
-            { id: 9,  sequenceID: 47073, orderDate: "2020-02-14", net: 1710000,  VAT: 342000,   total: 2052000, paymentStatus: "pending" },
-            { id: 10, sequenceID: 49121, orderDate: "2020-02-14", net: 6010800,  VAT: 1202200,  total: 7213000, paymentStatus: "received"},
-            { id: 11, sequenceID: 49122, orderDate: "2020-02-14", net: 6010800,  VAT: 1202200,  total: 7213000, paymentStatus: "received"},
-            { id: 12, sequenceID: 47076, orderDate: "2020-02-14", net: 1710000,  VAT: 342000,   total: 2052000, paymentStatus: "pending" }, 
-            { id: 13, sequenceID: 47073, orderDate: "2020-02-14", net: 1710000,  VAT: 342000,   total: 2052000, paymentStatus: "pending" },
-            { id: 14, sequenceID: 49121, orderDate: "2020-02-14", net: 6010800,  VAT: 1202200,  total: 7213000, paymentStatus: "received"},
-            { id: 15, sequenceID: 49122, orderDate: "2020-02-14", net: 6010800,  VAT: 1202200,  total: 7213000, paymentStatus: "received"},
-            { id: 16, sequenceID: 47076, orderDate: "2020-02-14", net: 1710000,  VAT: 342000,   total: 2052000, paymentStatus: "pending" },
-            { id: 17, sequenceID: 47073, orderDate: "2020-02-14", net: 1710000,  VAT: 342000,   total: 2052000, paymentStatus: "pending" },
-            { id: 18, sequenceID: 49121, orderDate: "2020-02-14", net: 6010800,  VAT: 1202200,  total: 7213000, paymentStatus: "received"},
-            { id: 19, sequenceID: 49122, orderDate: "2020-02-14", net: 6010800,  VAT: 1202200,  total: 7213000, paymentStatus: "received"},
-            { id: 20, sequenceID: 47076, orderDate: "2020-02-14", net: 1710000,  VAT: 342000,   total: 2052000, paymentStatus: "pending" },
-            { id: 21, sequenceID: 47072, orderDate: "2020-02-14", net: 400000,   VAT: 80000,    total: 480000,  paymentStatus: "pending" }, 
-            { id: 22, sequenceID: 47073, orderDate: "2020-02-14", net: 1710000,  VAT: 342000,   total: 2052000, paymentStatus: "pending" },
-            { id: 23, sequenceID: 49121, orderDate: "2020-02-14", net: 6010800,  VAT: 1202200,  total: 7213000, paymentStatus: "received"},
-            { id: 24, sequenceID: 49122, orderDate: "2020-02-14", net: 6010800,  VAT: 1202200,  total: 7213000, paymentStatus: "received"},
-            { id: 25, sequenceID: 47076, orderDate: "2020-02-14", net: 1710000,  VAT: 342000,   total: 2052000, paymentStatus: "pending" }, 
-        ]
+        results: data.count
     };
-    mockData["results"] = mockData.data.length;
+    formatedOrders.data = data.orders.map((order) => {
+        const date = new Date(order.order_date);
+        const dd = String(date.getDate()).padStart(2, "0");
+        const mm = String(date.getMonth() + 1).padStart(2, "0");
+        const yyyy = date.getFullYear();
 
-    return mockData;
+        return {
+            id: order.order_id,
+            OrderId: order.order_id,
+            OrderDate: `${dd}/${mm}/${yyyy}`,
+            NetAmount: order.net_amount,
+            TaxAmount: order.tax_amount,
+            TotalAmount: order.total_amount,
+            PaymentStatus: order.payment_status
+        }
+    });
+
+    return formatedOrders;
 }
 
 /**
@@ -50,6 +70,45 @@ async function getAll(limit, offset, filter, sort) {
  * @returns (object) - 
  */
 async function getById(id, limit, offset, filter, sort) {
+    const orderData = await getOrderById(id);
+    if (!orderData) {
+        throw ServiceError.notFound(`No order with id: ${id} found`, id);
+    }
+    // TODO: Should get products by OrderId, also missing columns in database.
+    const productData = await getProductsByQuery(Number(limit), Number(offset) - 1, parseFilterParams(filter), parseSortingParams(sort));
+
+    // TODO: Send the correct data based on the users role. With we still don't have...
+    const formatedOrder = {
+        OrderId: orderData.order_id,
+        OrderDate: orderData.order_date,
+        DeliveryAddress: "placeholder",
+        OrderStatus: orderData.status,
+        PaymentStatus: orderData.payment_status,
+        NetAmount: orderData.net_amount,
+        TaxAmount: orderData.tax_amount,
+        TotalAmount: orderData.total_amount,
+        LastPaymentNotificationDate: "placeholder",
+        CustomerName: "placeholder",
+        CustomerPhoneNr: "placeholder",
+        CustomerAddress: "placeholder",
+        SupplierName: "placeholder",
+        SupplierAddress: "placeholder",
+        SupplierVatNr: "placeholder",
+        SupplierAccountNr: "placeholder",
+        StructuredCommunication: "placeholder",
+        products: {
+            columns: {
+                
+            },
+            data: [
+
+            ],
+            results: productData.count,
+        },
+    }
+
+    return formatedOrder;
+
     // TEMP: get from database
     let mockData = {
         sequenceID: 47076,
