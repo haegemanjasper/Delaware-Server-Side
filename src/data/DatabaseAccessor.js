@@ -1,9 +1,9 @@
-import {PrismaClient} from "@prisma/client";
-import {getLogger} from "../core/logging";
+const {PrismaClient} = require("@prisma/client");
+const {getLogger} = require("../core/logging");
 
-export const prisma = new PrismaClient();
+const prisma = new PrismaClient();
 
-export const databaseOnline = async () => {
+const databaseOnline = async () => {
     try {
         await prisma.$connect();
         return true;
@@ -12,8 +12,14 @@ export const databaseOnline = async () => {
     }
 };
 
-export const disconnect = async () => {
+const disconnect = async () => {
     getLogger().info("Closing database connections");
     await prisma.$disconnect();
     getLogger().info("Closed all database connections.");
+};
+
+module.exports = {
+    prisma,
+    databaseOnline,
+    disconnect
 };
