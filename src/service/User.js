@@ -109,6 +109,14 @@ const checkAndParseSession = async (header) => {
     }
 };
 
+const getRoleByUsername = async (username) => {
+    const user = await getUserByUsername(username);
+
+    if (user === undefined) throw ServiceError.notFound(`A user with username '${username}' could not be found`);
+
+    return user.role; 
+};
+
 module.exports = {
     getAll,
     getByUsername,
@@ -119,5 +127,6 @@ module.exports = {
     makeExposedUser,
     makeLoginData,
     login,
-    checkAndParseSession
+    checkAndParseSession,
+    getRoleByUsername
 };
