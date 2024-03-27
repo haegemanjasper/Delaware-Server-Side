@@ -33,13 +33,13 @@ createNotification.validationScheme = {
 };
 
 const deleteNotification = async (ctx) => {
-    await notificationService.delete(ctx.params.id);
+    await notificationService.deleteById(ctx.params.id);
     ctx.status = 204;
 };
 
 deleteNotification.validationScheme = {
     params: Joi.object({
-        id: Joi.string().required(),
+        id: Joi.number().integer().required(),
     }),
 };
 
