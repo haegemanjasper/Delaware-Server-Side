@@ -9,6 +9,7 @@ const users = [
       CreatedAt: new Date(),
       UpdatedAt: new Date(),
       IsActive: true,
+      Role: "Klant"
     },
     {
       Username: 'Espera',
@@ -20,6 +21,19 @@ const users = [
       CreatedAt: new Date(),
       UpdatedAt: new Date(),
       IsActive: true,
+      Role: "Leverancier"
+    },
+    {
+      Username: 'Zurha',
+      PasswordHash: 'hashed_password_3',
+      Email: 'Zurha@example.com',
+      PhoneNr: '567891234',
+      VatNr: 'VAT567891',
+      Name: 'Friso De Backer',
+      CreatedAt: new Date(),
+      UpdatedAt: new Date(),
+      IsActive: true,
+      Role: "Administrator"
     }
   ];
   
