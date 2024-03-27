@@ -56,7 +56,9 @@ const createNotification = async (date, text, status, username) => {
             Date: date,
             Text: text,
             Status: status,
-            Username: username
+            Username: username,
+            CreatedAt: new Date(),
+            UpdatedAt: new Date(),
         }
     });
 
@@ -87,4 +89,5 @@ module.exports = {
     getAllNotifications,
     getNotificationById,
     deleteNotification,
+    createNotification,
 };
