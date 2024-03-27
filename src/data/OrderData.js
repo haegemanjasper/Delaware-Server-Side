@@ -25,6 +25,19 @@ const mapPrismaType = (order) => (
     }
 );
 
+const getOrdersByQuery = async (limit, offset, filter, sort) => {
+    const orders = await prisma.$transaction([
+        prisma.orders.count(),
+        prisma.orders.findMany({
+            skip: offset,
+            take: limit,
+            where: filter,
+            orderBy: sort
+        })
+    ]);
+    return { count: orders[0], orders: orders[1].map((order) => mapPrismaType(order)) };
+};
+
 /**
  * @returns {Promise<({tax_amount: number, order_reference: string, payment_status: string, created_at: Date, active: boolean, order_date: Date, delivery_date: Date, updated_at: Date, total_amount: number, invoice_id: number, currency: string, net_amount: number, order_id: number, status: string}|undefined)[]>}
  */
@@ -65,6 +78,7 @@ const deleteOrder = async (id) => {
 };
 
 module.exports = {
+    getOrdersByQuery,
     getAllOrders,
     getOrderById,
     deleteOrder

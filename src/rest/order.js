@@ -9,8 +9,8 @@ async function getAllOrders(ctx) {
     ctx.body = await orderService.getAll(
         ctx.request.query.limit,
         ctx.request.query.offset,
-        JSON.parse(decodeURIComponent(ctx.request.query.sort)),
-        JSON.parse(decodeURIComponent(ctx.request.query.filter))
+        JSON.parse(decodeURIComponent(ctx.request.query.filter)),
+        JSON.parse(decodeURIComponent(ctx.request.query.sort))
     );
 }
 getAllOrders.validationScheme = {
@@ -53,9 +53,8 @@ module.exports = (app) => {
         prefix: "/orders",
     });
 
-    // TODO: uncomment requireAuthentication once login is fully set up.
-    router.get("/", /*requireAuthentication,*/ validate(getAllOrders.validationScheme), getAllOrders);
-    router.get("/:id", /*requireAuthentication,*/ validate(getOrderById.validationScheme), getOrderById);
+    router.get("/", requireAuthentication, validate(getAllOrders.validationScheme), getAllOrders);
+    router.get("/:id", requireAuthentication, validate(getOrderById.validationScheme), getOrderById);
         
     app.use(router.routes()).use(router.allowedMethods());
 }

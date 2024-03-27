@@ -14,7 +14,7 @@ describe("Health", () => {
     const url = "/api/health";
 
     beforeAll(async () => {
-        defaultAuthHeader = await login(request);
+        authHeader = await login(request, "Brakkert@example.com", "hashed_password_1");
     });
 
     describe(`GET ${url}ping`, () => {
@@ -28,7 +28,7 @@ describe("Health", () => {
 
     describe(`GET ${url}/version`, () => {
         it("should 200 and return version data", async () => {
-            const response = await request.get(`${url}/version`).set("Authorization", defaultAuthHeader);
+            const response = await request.get(`${url}/version`).set("Authorization", authHeader);
             expect(response.status).toBe(200);
             expect(response.body).toEqual({
                 env: config.get("env"),

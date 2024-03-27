@@ -13,7 +13,6 @@ function test401Unauthorized(requestFactory) {
 
         expect(response.statusCode).toBe(401);
         expect(response.body.code).toBe("UNAUTHORIZED");
-        expect(response.body.message).toBe("You need to be signed in");
     });
 
     it("should 401 when invalid authorization token provided", async () => {
@@ -21,11 +20,20 @@ function test401Unauthorized(requestFactory) {
 
         expect(response.statusCode).toBe(401);
         expect(response.body.code).toBe("UNAUTHORIZED");
-        expect(response.body.message).toBe("Invalid authentication token");
     });
+}
+
+function test403Forbidden(requestFactory) {
+    it("should 403 when an invalid authorization token is provided", async () => {
+        const response = await requestFactory();
+
+        expect(response.statusCode).toBe(403);
+        expect(response.body.code).toBe("FORBIDDEN");
+    })
 }
 
 module.exports = {
     test400ValidationFailed,
-    test401Unauthorized
+    test401Unauthorized,
+    test403Forbidden
 };

@@ -19,6 +19,19 @@ const mapPrismaType = (product) => (
     }
 );
 
+const getProductsByQuery = async (limit, offset, filter, sort) => {
+    const products = await prisma.$transaction([
+        prisma.products.count(),
+        prisma.products.findMany({
+            skip: offset,
+            take: limit,
+            where: filter,
+            orderBy: sort,
+        })
+    ]);
+    return { count: products[0], products: products[1].map((product) => mapPrismaType(product))};
+};
+
 /**
  * @returns {Promise<({unit_of_measurement: string, updated_at: Date, price: number, product_id: number, product_availability: string, created_at: Date, active: boolean, stock: number, product_category: number}|undefined)[]>}
  */
@@ -61,6 +74,7 @@ const deleteProduct = async (id) => {
 };
 
 module.exports = {
+    getProductsByQuery,
     getAllProducts,
     getProductById,
     deleteProduct

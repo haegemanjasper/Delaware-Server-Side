@@ -15,7 +15,7 @@ describe("Order", () => {
     const url = "/api/orders";
 
     beforeAll(async () => {
-        authHeader = await login(request);
+        authHeader = await login(request, "Brakkert@example.com", "hashed_password_1");
     });
 
     describe(`GET ${url}`, () => { 
