@@ -34,8 +34,10 @@ const getAllNotifications = async () => {
  * @returns {Promise<{date: Date, updated_at: Date, created_at: Date, active: boolean, notification_id: number, text: string, status: string, username: string}|undefined>}
  */
 const getNotificationById = async (id) => {
+    const notificationId = parseInt(id);
+
     const notification = await prisma.notifications.findFirst({
-        where: { NotificationId: id },
+        where: { NotificationId: notificationId },
     });
 
     return mapPrismaType(notification);
