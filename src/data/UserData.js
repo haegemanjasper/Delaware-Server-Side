@@ -3,8 +3,8 @@ const {getLogger} = require("../core/logging");
 
 /**
  * Maps a Prisma user type to a type that makes a bit more sense to work with.
- * @param user { any | null | { Username: string, PasswordHash: string, Email: string, PhoneNr: string, VatNr: String, Name: String, CreatedAt: string, UpdatedAt: string, IsActive: boolean } }
- * @returns {undefined|{vat_nr, updated_at, phone_nr, password_hash, name, created_at, active, email, username}}
+ * @param user { any | null | { Username: string, PasswordHash: string, Email: string, PhoneNr: string, VatNr: String, Name: String, CreatedAt: string, UpdatedAt: string, IsActive: boolean, Role: string } }
+ * @returns {undefined|{vat_nr, updated_at, phone_nr, password_hash, name, created_at, active, email, username, role}}
  */
 const mapPrismaType = (user) => (
     user === null ? undefined : {
@@ -16,13 +16,14 @@ const mapPrismaType = (user) => (
         name: user.Name,
         created_at: user.CreatedAt,
         updated_at: user.UpdatedAt,
-        active: user.IsActive
+        active: user.IsActive,
+        role: user.Role
     }
 );
 
 /**
  * Gets all Users.
- * @returns {Promise<({vat_nr: string, updated_at: string, phone_nr: string, password_hash: string, name: string, created_at: string, active: boolean, email: string, username: string}|undefined)[]>}
+ * @returns {Promise<({vat_nr: string, updated_at: string, phone_nr: string, password_hash: string, name: string, created_at: string, active: boolean, email: string, username: string, role: string}|undefined)[]>}
  */
 const getAllUsers = async () => {
     const users = await prisma.users.findMany();
@@ -32,7 +33,7 @@ const getAllUsers = async () => {
 /**
  * Gets a user based on its username
  * @param username {string} The username.
- * @returns { Promise<undefined | { username: string, password_hash: string, email: string, phone_nr: string, vat_nr: string, name: string, created_at: string, updated_at: string, active: boolean }>}
+ * @returns { Promise<undefined | { username: string, password_hash: string, email: string, phone_nr: string, vat_nr: string, name: string, created_at: string, updated_at: string, active: boolean, role: string }>}
  */
 const getUserByUsername = async (username) => {
     const user = await prisma.users.findFirst({
@@ -45,7 +46,7 @@ const getUserByUsername = async (username) => {
 /**
  * Gets a user based on its email address
  * @param email {string} The email address.
- * @returns { Promise<undefined | { username: string, password_hash: string, email: string, phone_nr: string, vat_nr: string, name: string, created_at: string, updated_at: string, active: boolean }>}
+ * @returns { Promise<undefined | { username: string, password_hash: string, email: string, phone_nr: string, vat_nr: string, name: string, created_at: string, updated_at: string, active: boolean, role: string }>}
  */
 const getUserByEmail = async (email) => {
     const user = await prisma.users.findFirst({
@@ -58,7 +59,7 @@ const getUserByEmail = async (email) => {
 /**
  * Gets a user based on its VAT number
  * @param vat {string} The VAT number.
- * @returns { Promise<undefined | { username: string, password_hash: string, email: string, phone_nr: string, vat_nr: string, name: string, created_at: string, updated_at: string, active: boolean }>}
+ * @returns { Promise<undefined | { username: string, password_hash: string, email: string, phone_nr: string, vat_nr: string, name: string, created_at: string, updated_at: string, active: boolean, role: string }>}
  */
 const getUserByVat = async (vat) => {
     const user = await prisma.users.findFirst({
@@ -76,7 +77,8 @@ const getUserByVat = async (vat) => {
  * @param phone_nr {string}
  * @param vat_nr {string}
  * @param name {string}
- * @returns { Promise<undefined | { username: string, password_hash: string, email: string, phone_nr: string, vat_nr: string, name: string, created_at: string, updated_at: string, active: boolean }>}
+ * @param role {string}
+ * @returns { Promise<undefined | { username: string, password_hash: string, email: string, phone_nr: string, vat_nr: string, name: string, created_at: string, updated_at: string, active: boolean, role: string }>}
  */
 const createUser = async ({ username, password_hash, email, phone_nr, vat_nr, name }) => {
     const user = await prisma.users.create({
@@ -102,7 +104,8 @@ const createUser = async ({ username, password_hash, email, phone_nr, vat_nr, na
  * @param phone_nr {string}
  * @param vat_nr {string}
  * @param name {string}
- * @returns { Promise<undefined | { username: string, password_hash: string, email: string, phone_nr: string, vat_nr: string, name: string, created_at: string, updated_at: string, active: boolean }>}
+ * @param role {string}
+ * @returns { Promise<undefined | { username: string, password_hash: string, email: string, phone_nr: string, vat_nr: string, name: string, created_at: string, updated_at: string, active: boolean, role: string }>}
  */
 const updateUser = async (username, { password_hash, email, phone_nr, vat_nr, name }) => {
     const user = await getUserByUsername(username);

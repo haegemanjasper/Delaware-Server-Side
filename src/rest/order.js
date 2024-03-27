@@ -53,9 +53,8 @@ module.exports = (app) => {
         prefix: "/orders",
     });
 
-    // TODO: uncomment requireAuthentication once login is fully set up.
-    router.get("/", /*requireAuthentication,*/ validate(getAllOrders.validationScheme), getAllOrders);
-    router.get("/:id", /*requireAuthentication,*/ validate(getOrderById.validationScheme), getOrderById);
+    router.get("/", requireAuthentication, validate(getAllOrders.validationScheme), getAllOrders);
+    router.get("/:id", requireAuthentication, validate(getOrderById.validationScheme), getOrderById);
         
     app.use(router.routes()).use(router.allowedMethods());
 }

@@ -160,6 +160,7 @@ model Users {
   PhoneNr       String          @unique(map: "PhoneNr") @db.VarChar(16)
   VatNr         String          @unique(map: "VatNr") @db.VarChar(16)
   Name          String          @db.VarChar(30)
+  Role          String          @db.VarChar(32)
   CreatedAt     DateTime        @db.DateTime(0)
   UpdatedAt     DateTime        @db.DateTime(0)
   IsActive      Boolean         @default(true)

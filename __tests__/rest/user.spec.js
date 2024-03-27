@@ -1,5 +1,5 @@
 const { withServer } = require("../supertest.setup");
-const { test400ValidationFailed } = require("../common/clientErrors");
+const { test400ValidationFailed, test401Unauthorized } = require("../common/clientErrors");
 
 describe("Users", () => {
     let request;
@@ -15,13 +15,13 @@ describe("Users", () => {
     describe(`POST ${url}/login`, () => {
         it("should 200 and return a token", async () => {
             const response = await request.post(`${url}/login`).send({
-                email: "johndoe@gmail.com",
-                password :"Server2024"
+                email: "Brakkert@example.com",
+                password :"hashed_password_1"
             })
 
             expect(response.status).toBe(200);
             expect(response.body.user).toBeTruthy();
-            expect(response.body.user.email).toBe("johndoe@gmail.com");
+            expect(response.body.user.email).toBe("Brakkert@example.com");
             expect(response.body.token).toBeTruthy();
         });
 
@@ -53,25 +53,18 @@ describe("Users", () => {
         });
 
         describe("invalid password", () => {
-            test400ValidationFailed(() => request.post(`${url}/login`).send({
-                email: "johndoe@gmail.com",
-                password :"toshort"
+            test401Unauthorized(() => request.post(`${url}/login`).send({
+                email: "Brakkert@example.com",
+                password: "toshort"
             }));
-            test400ValidationFailed(() => request.post(`${url}/login`).send({
-                email: "johndoe@gmail.com",
-                password :"0".repeat(256),
+            test401Unauthorized(() => request.post(`${url}/login`).send({
+                email: "Brakkert@example.com",
+                password: "0".repeat(256),
             }));
-
-            it("should 401 when wrong password", async () => {
-                const response = await request.post(`${url}/login`).send({
-                    email: "johndoe@gmail.com",
-                    password :"wrongPassword",
-                }) 
-
-                expect(response.status).toBe(401);
-                expect(response.body.code).toBe("UNAUTHORIZED");
-                expect(response.body.message).toBe("The given email and password do not match");
-            });
+            test401Unauthorized(() => request.post(`${url}/login`).send({
+                email: "Brakkert@example.com",
+                password: "wrongPassword",
+            }));
         });
     });
 });
