@@ -34,8 +34,8 @@ const getById = async (id) => {
  * @param notification {object} De notificatiegegevens.
  * @returns {Promise<{id: string, message: string, userId: string, createdAt: string, updatedAt: string}>}
  */
-const create = async (notification) => {
-    return await createNotification(notification);
+async function create(date, text, status, username){
+    return await createNotification(date, text, status, username);
 };
 
 /**

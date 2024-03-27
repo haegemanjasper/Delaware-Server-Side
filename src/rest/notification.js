@@ -20,16 +20,18 @@ getNotificationById.validationScheme = {
     }),
 };
 
-const createNotification = async (ctx) => {
-    ctx.body = await notificationService.create(ctx.request.body);
-    ctx.status = 201;
-};
+async function createNotification(ctx){
+    ctx.body = await notificationService.create(ctx.request.body.date, ctx.request.body.text, ctx.request.body.status, ctx.request.body.username);
+    ctx.status = 200;
+}
 
 createNotification.validationScheme = {
     body: Joi.object({
-        message: Joi.string().required(),
-        userId: Joi.string().required(),
-    }),
+        date: Joi.date().required(),
+        text: Joi.string().required(),
+        username: Joi.string().required(),
+        status: Joi.string()
+    })
 };
 
 const deleteNotification = async (ctx) => {

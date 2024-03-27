@@ -29,8 +29,17 @@ const getAllAddresses = async () => {
 };
 
 const getAddressById = async (id) => {
+    addressId = parseInt(id);
     const address = await prisma.addresses.findFirst({
-        where: { AddressId: id }
+        where: { AddressId: addressId }
+    });
+
+    return mapPrismaType(address);
+};
+
+const getAddressByUsername = async (username) => {
+    const address = await prisma.addresses.findFirst({
+        where: { Username: username }
     });
 
     return mapPrismaType(address);
@@ -58,5 +67,6 @@ const deleteAddress = async (id) => {
 module.exports = {
     getAllAddresses,
     getAddressById,
-    deleteAddress
+    deleteAddress,
+    getAddressByUsername
 };
