@@ -5,18 +5,19 @@ const { getLogger } = require("../core/logging");
  * @param notification { null | { NotificationId: number, Date: Date, Text: string, Status: string, Username: string, CreatedAt: Date, UpdatedAt: Date, IsActive: boolean } }
  * @returns { undefined | { date: Date, updated_at: Date, created_at: Date, active: boolean, notification_id: number, text: string, status: string, username: string } }
  */
-const mapPrismaType = (notification) => (
-    notification === null ? undefined : {
-        notification_id: notification.NotificationId,
-        date: notification.Date,
-        text: notification.Text,
-        status: notification.Status,
-        username: notification.Username,
-        created_at: notification.CreatedAt,
-        updated_at: notification.UpdatedAt,
-        active: notification.IsActive
-    }
-);
+const mapPrismaType = (notification) =>
+    notification === null
+        ? undefined
+        : {
+              notification_id: notification.NotificationId,
+              date: notification.Date,
+              text: notification.Text,
+              status: notification.Status,
+              username: notification.Username,
+              created_at: notification.CreatedAt,
+              updated_at: notification.UpdatedAt,
+              active: notification.IsActive,
+          };
 
 /**
  *
@@ -33,8 +34,10 @@ const getAllNotifications = async () => {
  * @returns {Promise<{date: Date, updated_at: Date, created_at: Date, active: boolean, notification_id: number, text: string, status: string, username: string}|undefined>}
  */
 const getNotificationById = async (id) => {
+    const notificationId = parseInt(id);
+
     const notification = await prisma.notifications.findFirst({
-        where: { NotificationId: id }
+        where: { NotificationId: notificationId },
     });
 
     return mapPrismaType(notification);
@@ -74,7 +77,7 @@ const deleteNotification = async (id) => {
     }
 
     await prisma.notifications.delete({
-        where: { NotificationId: id }
+        where: { NotificationId: id },
     });
 
     return true;
@@ -83,5 +86,5 @@ const deleteNotification = async (id) => {
 module.exports = {
     getAllNotifications,
     getNotificationById,
-    deleteNotification
+    deleteNotification,
 };

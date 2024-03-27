@@ -3,12 +3,10 @@ const { test400ValidationFailed, test401Unauthorized } = require("../common/clie
 
 describe("Users", () => {
     let request;
-    
-    withServer(({
-        supertest,
-    }) => {
-        request = supertest
-        });
+
+    withServer(({ supertest }) => {
+        request = supertest;
+    });
 
     const url = "/api/users";
 
@@ -26,30 +24,42 @@ describe("Users", () => {
         });
 
         describe("invalid email", () => {
-            test400ValidationFailed(() => request.post(`${url}/login`).send({
-                email: "notAnEmail",
-                password :"Server2024"
-            }));
-            test400ValidationFailed(() => request.post(`${url}/login`).send({
-                email: "notAnEmail@",
-                password :"Server2024"
-            }));
-            test400ValidationFailed(() => request.post(`${url}/login`).send({
-                email: "notAnEmail@mail",
-                password :"Server2024"
-            }));
-            test400ValidationFailed(() => request.post(`${url}/login`).send({
-                email: "notAnEmail.com",
-                password :"Server2024"
-            }));
-            test400ValidationFailed(() => request.post(`${url}/login`).send({
-                email: "notAnEmail@.com",
-                password :"Server2024"
-            }));
-            test400ValidationFailed(() => request.post(`${url}/login`).send({
-                email: "0".repeat(255) + "@gmail.com",
-                password :"Server2024"
-            }));
+            test400ValidationFailed(() =>
+                request.post(`${url}/login`).send({
+                    email: "notAnEmail",
+                    password: "Server2024",
+                })
+            );
+            test400ValidationFailed(() =>
+                request.post(`${url}/login`).send({
+                    email: "notAnEmail@",
+                    password: "Server2024",
+                })
+            );
+            test400ValidationFailed(() =>
+                request.post(`${url}/login`).send({
+                    email: "notAnEmail@mail",
+                    password: "Server2024",
+                })
+            );
+            test400ValidationFailed(() =>
+                request.post(`${url}/login`).send({
+                    email: "notAnEmail.com",
+                    password: "Server2024",
+                })
+            );
+            test400ValidationFailed(() =>
+                request.post(`${url}/login`).send({
+                    email: "notAnEmail@.com",
+                    password: "Server2024",
+                })
+            );
+            test400ValidationFailed(() =>
+                request.post(`${url}/login`).send({
+                    email: "0".repeat(255) + "@gmail.com",
+                    password: "Server2024",
+                })
+            );
         });
 
         describe("invalid password", () => {

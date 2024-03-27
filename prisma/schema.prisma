@@ -91,16 +91,17 @@ model Orders {
   CreatedAt       DateTime          @db.DateTime(0)
   UpdatedAt       DateTime          @db.DateTime(0)
   IsActive        Boolean           @default(true)
-  Username        String            @db.VarChar(20)
+  BuyerUsername   String?           @db.VarChar(20)
   InvoiceId       Int
+  SellerUsername  String?           @db.VarChar(20)
   Notifications   Notifications[]
   OrderLines      OrderLines[]
   Invoices        Invoices          @relation(fields: [InvoiceId], references: [InvoiceId], onUpdate: Restrict, map: "OrderInvoices_FK")
-  Users           Users             @relation(fields: [Username], references: [Username], onUpdate: Restrict, map: "OrderUsers_FK")
+  Users           Users?            @relation(fields: [BuyerUsername], references: [Username], onDelete: Restrict, onUpdate: Restrict, map: "OrderUsers_FK")
   PaymentRequests PaymentRequests[]
 
   @@index([InvoiceId], map: "OrderInvoices_FK")
-  @@index([Username], map: "OrderUsers_FK")
+  @@index([BuyerUsername], map: "OrderUsers_FK")
 }
 
 model PaymentRequests {
@@ -155,15 +156,15 @@ model Products {
 
 model Users {
   Username      String          @id @db.VarChar(20)
-  PasswordHash  String          @db.VarChar(64)
+  PasswordHash  String?         @db.VarChar(128)
   Email         String          @unique(map: "Email") @db.VarChar(50)
   PhoneNr       String          @unique(map: "PhoneNr") @db.VarChar(16)
   VatNr         String          @unique(map: "VatNr") @db.VarChar(16)
   Name          String          @db.VarChar(30)
-  Role          String          @db.VarChar(32)
   CreatedAt     DateTime        @db.DateTime(0)
   UpdatedAt     DateTime        @db.DateTime(0)
   IsActive      Boolean         @default(true)
+  Role          String?         @db.VarChar(32)
   Addresses     Addresses[]
   Notifications Notifications[]
   Orders        Orders[]
