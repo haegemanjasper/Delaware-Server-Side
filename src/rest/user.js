@@ -51,6 +51,17 @@ deleteUser.validationScheme = {
     }),
 };
 
+const getRoleByUsername = async (ctx) => {
+    ctx.body = await userService.getRoleByUsername(ctx.params.username);
+};
+
+getRoleByUsername.validationScheme = {
+    params: Joi.object({
+        username: Joi.string().min(3).max(20)
+    })
+};
+
+
 const register = async (ctx) => {
     ctx.body = await userService.register(ctx.request.body);
     ctx.status = 200;
@@ -78,6 +89,8 @@ login.validationScheme = {
 
 module.exports = (app) => {
     const router = new Router({ prefix: "/users" });
+
+    router.get("/role/:username", validate(getRoleByUsername.validationScheme), getRoleByUsername);
 
     router.post("/register", validate(register.validationScheme), register);
     router.post("/login", validate(login.validationScheme), login);
