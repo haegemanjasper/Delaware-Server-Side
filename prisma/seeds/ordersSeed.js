@@ -13,7 +13,8 @@ const orders = [
       CreatedAt: new Date(),
       UpdatedAt: new Date(),
       IsActive: true,
-      Username: 'Brakkert', 
+      BuyerUsername: 'Brakkert', 
+      SellerUsername: 'Zurha',
       InvoiceId: 1 
     },
     {
@@ -30,7 +31,8 @@ const orders = [
       CreatedAt: new Date(),
       UpdatedAt: new Date(),
       IsActive: true,
-      Username: 'Espera', 
+      BuyerUsername: 'Espera',
+      SellerUsername: 'Brakkert',
       InvoiceId: 2 
     }
   ];
