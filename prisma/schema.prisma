@@ -17,7 +17,7 @@ model Addresses {
   UpdatedAt DateTime @db.DateTime(0)
   IsActive  Boolean  @default(true)
   Username  String   @db.VarChar(20)
-  Users     Users    @relation(fields: [Username], references: [Username], onUpdate: Restrict, map: "Users_FK")
+  Users     Users    @relation(fields: [Username], references: [BuyerUsername], onUpdate: Restrict, map: "Users_FK")
 
   @@index([Username], map: "Users_FK")
 }
@@ -51,7 +51,7 @@ model Notifications {
   IsActive       Boolean  @default(true)
   Username       String   @db.VarChar(20)
   OrderId        Int?
-  Users          Users    @relation(fields: [Username], references: [Username], onUpdate: Restrict, map: "NotificationUsers_FK")
+  Users          Users    @relation(fields: [Username], references: [BuyerUsername], onUpdate: Restrict, map: "NotificationUsers_FK")
   Orders         Orders?  @relation(fields: [OrderId], references: [OrderId], onDelete: Restrict, onUpdate: Restrict, map: "NotificationsOrders_FK")
 
   @@index([Username], map: "NotificationUsers_FK")
@@ -96,7 +96,7 @@ model Orders {
   Notifications   Notifications[]
   OrderLines      OrderLines[]
   Invoices        Invoices          @relation(fields: [InvoiceId], references: [InvoiceId], onUpdate: Restrict, map: "OrderInvoices_FK")
-  Users           Users             @relation(fields: [Username], references: [Username], onUpdate: Restrict, map: "OrderUsers_FK")
+  Users           Users             @relation(fields: [Username], references: [BuyerUsername], onUpdate: Restrict, map: "OrderUsers_FK")
   PaymentRequests PaymentRequests[]
 
   @@index([InvoiceId], map: "OrderInvoices_FK")
@@ -154,17 +154,18 @@ model Products {
 }
 
 model Users {
-  Username      String          @id @db.VarChar(20)
-  PasswordHash  String          @db.VarChar(64)
-  Email         String          @unique(map: "Email") @db.VarChar(50)
-  PhoneNr       String          @unique(map: "PhoneNr") @db.VarChar(16)
-  VatNr         String          @unique(map: "VatNr") @db.VarChar(16)
-  Name          String          @db.VarChar(30)
-  Role          String          @db.VarChar(32)
-  CreatedAt     DateTime        @db.DateTime(0)
-  UpdatedAt     DateTime        @db.DateTime(0)
-  IsActive      Boolean         @default(true)
-  Addresses     Addresses[]
-  Notifications Notifications[]
-  Orders        Orders[]
+  BuyerUsername  String          @id @db.VarChar(20)
+  PasswordHash   String?         @db.VarChar(128)
+  Email          String          @unique(map: "Email") @db.VarChar(50)
+  PhoneNr        String          @unique(map: "PhoneNr") @db.VarChar(16)
+  VatNr          String          @unique(map: "VatNr") @db.VarChar(16)
+  Name           String          @db.VarChar(30)
+  CreatedAt      DateTime        @db.DateTime(0)
+  UpdatedAt      DateTime        @db.DateTime(0)
+  IsActive       Boolean         @default(true)
+  Role           String?         @db.VarChar(32)
+  SellerUsername String?         @db.VarChar(20)
+  Addresses      Addresses[]
+  Notifications  Notifications[]
+  Orders         Orders[]
 }
